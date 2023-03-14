@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App';
 import HomePage from './pages/HomePage';
 import NotFound from './pages/NotFound';
 import AboutUs from './pages/AboutUs';
+import Cards from './components/cards/Cards';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -13,6 +13,10 @@ const router = createBrowserRouter([
     element: <HomePage />,
     errorElement: <NotFound />,
     children: [
+      {
+        path: '',
+        element: <Cards />,
+      },
       {
         path: 'about-us',
         element: <AboutUs />,
