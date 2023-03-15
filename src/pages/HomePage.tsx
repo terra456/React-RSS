@@ -1,6 +1,6 @@
-import SearchBar from '../components/searchBar/SearchBar';
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import SearchBar from '../components/searchBar/SearchBar';
 
 class HomePage extends React.Component {
   constructor(props: string) {
@@ -10,14 +10,18 @@ class HomePage extends React.Component {
   render() {
     return (
       <>
-        <header>
+        <header className="mx-auto flex max-w-2xl flex-wrap justify-between space-x-4 py-5 px-4 sm:py-4 sm:px-6 lg:max-w-7xl lg:px-8 lg:py-8">
           <nav>
-            <ul>
+            <ul className="flex space-x-4">
               <li>
-                <Link to={'/'}>Home</Link>
+                <Link className="block px-4 py-2 text-sm text-gray-700" to={'/'}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to={'/about-us'}>AboutUs</Link>
+                <Link className="block px-4 py-2 text-sm text-gray-700" to={'/about-us'}>
+                  AboutUs
+                </Link>
               </li>
             </ul>
           </nav>
