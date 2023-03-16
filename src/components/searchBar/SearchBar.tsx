@@ -1,4 +1,3 @@
-import { IconButton, Input } from '@material-tailwind/react';
 import React, { ChangeEvent, FormEvent } from 'react';
 
 class SearchBar extends React.Component {
@@ -28,28 +27,20 @@ class SearchBar extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="relative flex w-full max-w-[24rem]">
-        <div className="w-72">
-          <Input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            labelProps={{
-              className: 'before:content-none after:content-none',
-            }}
-            className="flex h-10 !rounded-r-none !border-t-blue-gray-200 focus:!border-t-blue-500"
-            containerProps={{
-              className: 'min-w-0',
-            }}
-          />
-        </div>
-        <IconButton
+        <input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleChange}
+          className="block h-7 w-full rounded-md rounded-tr-none rounded-br-none border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-200 sm:text-sm sm:leading-6"
+        />
+        <button
           type="submit"
-          color="blue"
+          name="search"
           disabled={!this.state.value}
-          className="flex h-10 items-center rounded-l-none"
+          className="w-15 flex h-10 items-center rounded-l-none"
         >
           <i className="fas fa-magnifying-glass" />
-        </IconButton>
+        </button>
       </form>
     );
   }

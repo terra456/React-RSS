@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import SearchBar from '../components/searchBar/SearchBar';
 
 class HomePage extends React.Component {
@@ -14,14 +14,30 @@ class HomePage extends React.Component {
           <nav>
             <ul className="flex space-x-4">
               <li>
-                <Link className="block px-4 py-2 text-sm text-gray-700" to={'/'}>
+                <NavLink
+                  to={'/'}
+                  className="mx-4 my-2 block text-sm text-gray-700 hover:text-blue-200"
+                  style={({ isActive }) => {
+                    return {
+                      borderBottom: isActive ? '2px solid #38BDF8' : '',
+                    };
+                  }}
+                >
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link className="block px-4 py-2 text-sm text-gray-700" to={'/about-us'}>
+                <NavLink
+                  to={'/about-us'}
+                  className="mx-4 my-2 block text-sm text-gray-700 hover:text-blue-200"
+                  style={({ isActive }) => {
+                    return {
+                      borderBottom: isActive ? '2px solid #38BDF8' : '',
+                    };
+                  }}
+                >
                   AboutUs
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>

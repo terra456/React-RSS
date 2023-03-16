@@ -17,7 +17,7 @@ class Cards extends React.Component {
             {images.map((el, i) => {
               if (typeof el !== 'string') {
                 return (
-                  <div key={i + el.name.ru}>
+                  <div key={i + el.name.ru} className="group relative">
                     <CardBlock {...el} />
                   </div>
                 );
