@@ -1,9 +1,23 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import './App.css';
-import SearchBar from './components/searchBar/SearchBar';
+import Header from './components/header/Header';
 
-function App() {
-  return <SearchBar />;
+class App extends React.Component {
+  constructor(props: string) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+      </>
+    );
+  }
 }
 
 export default App;

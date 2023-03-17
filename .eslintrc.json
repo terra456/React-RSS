@@ -23,7 +23,14 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks", "html", "css"],
-  "ignorePatterns": [".prettierrc.json", "**/vendor/*.js", "/public", "**/*.jpg", "**/*.css"],
+  "ignorePatterns": [
+    ".prettierrc.json",
+    "**/vendor/*.js",
+    "/public",
+    "**/*.jpg",
+    "**/*.css",
+    "**/*.png"
+  ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
