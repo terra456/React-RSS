@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import SearchBar from '../searchBar/SearchBar';
 
 class Header extends React.Component {
   constructor(props: string) {
@@ -40,7 +39,6 @@ class Header extends React.Component {
             </li>
           </ul>
         </nav>
-        <SearchBar />
       </header>
     );
   }

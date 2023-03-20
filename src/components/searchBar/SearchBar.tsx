@@ -15,11 +15,10 @@ class SearchBar extends React.Component {
 
   handleSubmit(event: FormEvent) {
     console.log('Was submitted: ' + this.state.value);
-    localStorage.setItem('searchStr', this.state.value);
     event.preventDefault();
   }
 
-  componentDidUnmount(): void {
+  componentWillUnmount(): void {
     const str = this.state.value;
     localStorage.setItem('searchStr', str);
   }
