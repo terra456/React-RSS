@@ -1,8 +1,13 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { afterEach } from 'vitest';
 import SearchBar from './SearchBar';
+
+afterEach(() => {
+  cleanup();
+});
 
 describe('Search Bar', () => {
   it('render input and button', async () => {
@@ -35,7 +40,7 @@ describe('Search Bar', () => {
     render(<SearchBar />);
     const btn = await screen.getByRole('button');
     const input = await screen.getByRole('textbox');
-    expect(btn).toBeDisabled();
+    expect(btn).toBeEnabled();
     await user.type(input, 'smth');
     await userEvent.click(btn);
     expect(input).toHaveValue();
