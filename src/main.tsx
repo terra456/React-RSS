@@ -5,6 +5,7 @@ import App from './App';
 import Cards from './components/cards/Cards';
 import './index.css';
 import AboutUs from './pages/AboutUs';
+import AddCard from './pages/AddCard';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Cards />,
+      },
+      {
+        path: 'add-card',
+        element: <AddCard />,
       },
       {
         path: 'about-us',

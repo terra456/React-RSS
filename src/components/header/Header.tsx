@@ -26,6 +26,19 @@ class Header extends React.Component {
             </li>
             <li>
               <NavLink
+                to={'/add-card'}
+                className="mx-4 my-2 block text-sm text-gray-700 hover:text-blue-200"
+                style={({ isActive }) => {
+                  return {
+                    borderBottom: isActive ? '2px solid #38BDF8' : '',
+                  };
+                }}
+              >
+                Add Card
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to={'/about-us'}
                 className="mx-4 my-2 block text-sm text-gray-700 hover:text-blue-200"
                 style={({ isActive }) => {
