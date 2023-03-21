@@ -9,6 +9,8 @@ class CardForm extends React.Component {
     checkboxValue: string[];
     radioValue: string;
     image: string;
+    agree: boolean;
+    isFormValid: boolean;
   };
   constructor(props: string) {
     super(props);
@@ -20,6 +22,8 @@ class CardForm extends React.Component {
       checkboxValue: [],
       radioValue: '',
       image: '',
+      agree: false,
+      isFormValid: true,
     };
   }
 
@@ -29,13 +33,60 @@ class CardForm extends React.Component {
 
   inputNameRef: React.RefObject<HTMLInputElement> = React.createRef();
   inputDateRef: React.RefObject<HTMLInputElement> = React.createRef();
+  inputAgreeRef: React.RefObject<HTMLInputElement> = React.createRef();
   selectValueRef: React.RefObject<HTMLSelectElement> = React.createRef();
+  checkLegendRef: React.RefObject<HTMLLegendElement> = React.createRef();
+  radioLegendRef: React.RefObject<HTMLLegendElement> = React.createRef();
   imageRef: React.RefObject<HTMLInputElement> = React.createRef();
+  saveBtnRef: React.RefObject<HTMLButtonElement> = React.createRef();
 
   validateForm = () => {
-    const { inputName, inputDate, selectValue, checkboxValue, radioValue, image } = this.state;
-    if (inputName) {
-      this.inputNameRef.current?.classList.add('invalid');
+    const { inputName, inputDate, selectValue, checkboxValue, radioValue, image, agree } =
+      this.state;
+    let isFormValid = true;
+    if (inputName === '') {
+      this.inputNameRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+    }
+    if (inputDate === '') {
+      this.inputDateRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+    }
+    if (selectValue === '' || selectValue === undefined) {
+      this.selectValueRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+    }
+    if (checkboxValue.length === 0) {
+      this.checkLegendRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+    }
+    if (radioValue === '' || radioValue === undefined) {
+      this.radioLegendRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+    }
+    // if (radioValue) {
+    //   // this.inputDateRef.current?.setAttribute('aria-invalid', 'true');
+    //   isFormValid = false;
+    // }
+    if (agree) {
+      this.inputAgreeRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+    }
+
+    if (!isFormValid) {
+      this.setState({ isFormValid: false });
+    }
+    return isFormValid;
+  };
+
+  addCard() {
+    throw new Error('Method not implemented.');
+  }
+
+  handleBlur = (e: InputEvent<HTMLInputElement>) => {
+    if (!this.state.isFormValid) {
+      e.target.setAttribute('aria-invalid', 'false');
+      this.setState({ isFormValid: true });
     }
   };
 
@@ -45,11 +96,11 @@ class CardForm extends React.Component {
       inputDate: this.inputDateRef.current?.value,
       selectValue: this.selectValueRef.current?.value,
       image: this.imageRef.current?.value,
+      agree: this.inputAgreeRef.current?.checked,
     });
-    console.log(this.state);
   };
 
-  handleCheckboxValue = (e: InputEvent<HTMLInputElement>) => {
+  handleMultyValue = (e: InputEvent<HTMLInputElement>) => {
     const { checkboxValue } = this.state;
     const value = e.target.value;
     if (value) {
@@ -59,16 +110,24 @@ class CardForm extends React.Component {
         checkboxValue: checkboxValue,
       });
     }
+    this.checkLegendRef.current?.setAttribute('aria-invalid', 'false');
   };
 
   handleRadioValue = (e: InputEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
     this.setState({
-      radioValue: e.target.value,
+      [name]: value,
     });
+    this.radioLegendRef.current?.setAttribute('aria-invalid', 'false');
   };
 
   handleSubmit = (event: FormEvent) => {
     event.preventDefault();
+    if (this.validateForm()) {
+      this.addCard();
+    }
     console.log(this.state);
   };
 
@@ -88,6 +147,7 @@ class CardForm extends React.Component {
                   </label>
                   <input
                     ref={this.inputNameRef}
+                    onBlur={this.handleBlur}
                     onChange={this.handleChange}
                     type="text"
                     name="name"
@@ -104,6 +164,7 @@ class CardForm extends React.Component {
                   <input
                     ref={this.inputDateRef}
                     onChange={this.handleChange}
+                    onBlur={this.handleBlur}
                     type="date"
                     name="date"
                     className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -120,6 +181,7 @@ class CardForm extends React.Component {
                   <select
                     ref={this.selectValueRef}
                     onChange={this.handleChange}
+                    onBlur={this.handleBlur}
                     name="country"
                     className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   >
@@ -134,7 +196,10 @@ class CardForm extends React.Component {
             <div className="overflow-hidden shadow sm:rounded-md">
               <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <fieldset>
-                  <legend className="contents text-sm font-semibold leading-6 text-gray-900">
+                  <legend
+                    ref={this.checkLegendRef}
+                    className="contents text-sm font-semibold leading-6 text-gray-900"
+                  >
                     Legend for checkboxes options
                   </legend>
                   <div className="mt-4 space-y-4">
@@ -143,7 +208,7 @@ class CardForm extends React.Component {
                         <div key={el + i} className="flex h-6 items-center text-sm leading-6">
                           <input
                             id={el}
-                            onChange={this.handleCheckboxValue}
+                            onChange={this.handleMultyValue}
                             name="checkboxes"
                             type="checkbox"
                             value={el}
@@ -157,18 +222,21 @@ class CardForm extends React.Component {
                     })}
                   </div>
                 </fieldset>
-                <fieldset>
-                  <legend className="contents text-sm font-semibold leading-6 text-gray-900">
+                <fieldset aria-required="true">
+                  <legend
+                    ref={this.radioLegendRef}
+                    className="contents text-sm font-semibold leading-6 text-gray-900"
+                  >
                     Legend for radiobuttons
                   </legend>
-                  <div className="mt-4 space-y-4">
+                  <div aria-required="false" className="mt-4 space-y-4 aria-required:text-red-500">
                     {this.radiosArr.map((el, i) => {
                       return (
                         <div key={i + el} className="flex items-center">
                           <input
                             id={el}
                             onChange={this.handleRadioValue}
-                            name="radiobuttons"
+                            name="radioValue"
                             type="radio"
                             value={el}
                             className="h-4 w-4 border-gray-500 text-indigo-600 focus:ring-indigo-600"
@@ -184,12 +252,33 @@ class CardForm extends React.Component {
                     })}
                   </div>
                 </fieldset>
+                <fieldset>
+                  <div className="mt-4 space-y-4">
+                    <div className="flex h-6 items-center text-sm leading-6">
+                      <input
+                        id="agree"
+                        ref={this.inputAgreeRef}
+                        onChange={this.handleChange}
+                        name="agree"
+                        type="checkbox"
+                        className="h-4 w-4 rounded border-gray-500 text-indigo-600 focus:ring-indigo-600"
+                      />
+                      <label htmlFor="agree" className="ml-3 font-medium text-gray-900">
+                        Agree the terms
+                      </label>
+                    </div>
+                    <span className="ml-8 -mt-0 text-xs">
+                      {!this.state.agree ? 'You must agree the terms' : ''}
+                    </span>
+                  </div>
+                </fieldset>
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
               <button
+                disabled={!this.state.isFormValid}
                 type="submit"
-                className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:bg-gray-500 disabled:hover:bg-gray-500"
               >
                 Save
               </button>
