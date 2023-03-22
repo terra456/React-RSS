@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
-import Cards from './components/cards/Cards';
 import './index.css';
 import AboutUs from './pages/AboutUs';
 import AddCard from './pages/AddCard';
+import MainPage from './pages/mainPage';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <Cards />,
+        element: <MainPage dataList={[]} />,
       },
       {
         path: 'add-card',

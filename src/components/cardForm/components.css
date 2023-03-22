@@ -14603,7 +14603,8 @@ html {
 }
 
 input[aria-invalid="true"],
-select[aria-invalid="true"] {
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
   border: 1px red solid;
 }
 

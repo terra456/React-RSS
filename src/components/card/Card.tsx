@@ -10,10 +10,16 @@ class CardBlock extends React.Component {
 
   render() {
     return (
-      <div className="min-h-90 h-90 lg:min-h-90 aspect-w-1 aspect-h-1 aspect-none w-full max-w-[26rem] flex-col overflow-hidden rounded-md bg-gray-200 shadow-lg group-hover:opacity-75 sm:h-full ">
-        <div className="min-h-60 aspect-none h-60 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-60">
+      <div className="min-h-90 h-90 lg:min-h-90 aspect-h-1 aspect-none w-full max-w-[26rem] flex-col overflow-hidden rounded-md bg-gray-200 shadow-lg group-hover:opacity-75 sm:h-full ">
+        <div className="min-h-60 h-60 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:h-60">
           <img
-            src={'./assets/images/full/' + this.info.picture + 'full.jpg'}
+            src={
+              this.info.picture
+                ? './assets/images/full/' + this.info.picture + 'full.jpg'
+                : this.info.imgSrc
+                ? this.info.imgSrc
+                : ''
+            }
             alt={this.info.name.en}
             className="h-full w-full object-cover object-center lg:h-full lg:w-full"
           />

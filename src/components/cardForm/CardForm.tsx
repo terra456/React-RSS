@@ -1,15 +1,24 @@
 import React, { FormEvent } from 'react';
 import './components.css';
 
-type CardFormType = {
+export type CardFormType = {
   inputName: string;
   inputDate: string;
+  description: string;
   selectValue: string;
   checkboxValue: string[];
   radioValue: string;
   file: string;
   agree: boolean;
   isFormValid: boolean;
+  errorName?: string;
+  errorDate?: string;
+  errorDesc?: string;
+  errorSelect?: string;
+  errorCheckbox?: string;
+  errorRadio?: string;
+  errorFile?: string;
+  errorAgree?: string;
 };
 
 class CardForm extends React.Component {
@@ -24,12 +33,21 @@ class CardForm extends React.Component {
     this.state = {
       inputName: '',
       inputDate: '',
+      description: '',
       selectValue: '',
       checkboxValue: [],
       radioValue: '',
       file: '',
       agree: false,
       isFormValid: true,
+      errorName: '',
+      errorDate: '',
+      errorDesc: '',
+      errorSelect: '',
+      errorCheckbox: '',
+      errorRadio: '',
+      errorFile: '',
+      errorAgree: '',
     };
     console.log(props);
   }
@@ -40,49 +58,77 @@ class CardForm extends React.Component {
 
   inputNameRef: React.RefObject<HTMLInputElement> = React.createRef();
   inputDateRef: React.RefObject<HTMLInputElement> = React.createRef();
+  inputTextaria: React.RefObject<HTMLTextAreaElement> = React.createRef();
   inputAgreeRef: React.RefObject<HTMLInputElement> = React.createRef();
   selectValueRef: React.RefObject<HTMLSelectElement> = React.createRef();
-  checkLegendRef: React.RefObject<HTMLLegendElement> = React.createRef();
-  radioLegendRef: React.RefObject<HTMLLegendElement> = React.createRef();
   fileRef: React.RefObject<HTMLInputElement> = React.createRef();
   saveBtnRef: React.RefObject<HTMLButtonElement> = React.createRef();
 
   validateForm = () => {
-    const { inputName, inputDate, selectValue, checkboxValue, radioValue, agree } = this.state;
+    const {
+      inputName,
+      inputDate,
+      description,
+      selectValue,
+      checkboxValue,
+      radioValue,
+      agree,
+      file,
+    } = this.state;
     let isFormValid = true;
     if (inputName === '') {
       this.inputNameRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
-      console.log('here');
+      this.setState({ errorName: 'name cant be empty' });
+    } else {
+      this.setState({ errorName: '' });
     }
     if (inputDate === '') {
       this.inputDateRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
-      console.log('here');
+      this.setState({ errorDate: 'date cant be empty' });
+    } else {
+      this.setState({ errorDate: '' });
+    }
+    if (description.length <= 10) {
+      this.inputTextaria.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+      this.setState({ errorDesc: 'description mast be 10 and more' });
+    } else {
+      this.setState({ errorDesc: '' });
     }
     if (selectValue === '' || selectValue === undefined) {
       this.selectValueRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
+      this.setState({ errorSelect: 'you must select any value' });
+    } else {
+      this.setState({ errorSelect: '' });
     }
     if (checkboxValue.length === 0) {
-      this.checkLegendRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
-      console.log('here');
+      this.setState({ errorCheckbox: 'you must select any value' });
+    } else {
+      this.setState({ errorCheckbox: '' });
     }
     if (radioValue === '' || radioValue === undefined) {
-      this.radioLegendRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
-      console.log('here');
+      this.setState({ errorRadio: 'you must select any value' });
+    } else {
+      this.setState({ errorRadio: '' });
     }
-    // if (file) {
-    //   this.fileRef.current?.setAttribute('aria-invalid', 'true');
-    //   isFormValid = false;
-    //   console.log('here');
-    // }
+    if (file === '') {
+      this.fileRef.current?.setAttribute('aria-invalid', 'true');
+      isFormValid = false;
+      this.setState({ errorFile: 'add any picture' });
+    } else {
+      this.setState({ errorFile: '' });
+    }
     if (!agree) {
       this.inputAgreeRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
-      console.log('here agree');
+      this.setState({ errorAgree: 'You must agree the terms' });
+    } else {
+      this.setState({ errorAgree: '' });
     }
 
     if (!isFormValid) {
@@ -93,22 +139,31 @@ class CardForm extends React.Component {
   };
 
   addCard() {
-    this.props.onFormSubmit([this.state]);
-    // this.setState({
-    //   inputName: '',
-    //   inputDate: '',
-    //   selectValue: '',
-    //   checkboxValue: [],
-    //   radioValue: '',
-    //   file: '',
-    //   agree: false,
-    //   isFormValid: true,
-    // });
+    this.props.onFormSubmit(this.state);
+    this.setState({
+      inputName: '',
+      inputDate: '',
+      description: '',
+      selectValue: '',
+      checkboxValue: [],
+      radioValue: '',
+      file: '',
+      agree: false,
+      isFormValid: true,
+      errorName: '',
+      errorDate: '',
+      errorDesc: '',
+      errorSelect: '',
+      errorCheckbox: '',
+      errorRadio: '',
+      errorFile: '',
+      errorAgree: '',
+    });
   }
 
   handleBlur = (e: InputEvent<HTMLInputElement>) => {
+    e.target.setAttribute('aria-invalid', 'false');
     if (!this.state.isFormValid) {
-      e.target.setAttribute('aria-invalid', 'false');
       this.setState({ isFormValid: true });
     }
   };
@@ -117,6 +172,7 @@ class CardForm extends React.Component {
     this.setState({
       inputName: this.inputNameRef.current?.value,
       inputDate: this.inputDateRef.current?.value,
+      description: this.inputTextaria.current?.value,
       selectValue: this.selectValueRef.current?.value,
       agree: this.inputAgreeRef.current?.checked,
     });
@@ -132,7 +188,6 @@ class CardForm extends React.Component {
         checkboxValue: checkboxValue,
       });
     }
-    this.checkLegendRef.current?.setAttribute('aria-invalid', 'false');
   };
 
   handleRadioValue = (e: InputEvent<HTMLInputElement>) => {
@@ -142,7 +197,6 @@ class CardForm extends React.Component {
     this.setState({
       [name]: value,
     });
-    this.radioLegendRef.current?.setAttribute('aria-invalid', 'false');
   };
 
   handleSubmit = (event: FormEvent) => {
@@ -160,9 +214,14 @@ class CardForm extends React.Component {
       this.fileRef.current.files?.length > 0
     ) {
       const file = this.fileRef.current.files[0];
-      this.setState({
-        file: window.URL.createObjectURL(file),
-      });
+      if (file.type.startsWith('image')) {
+        this.setState({
+          file: window.URL.createObjectURL(file),
+        });
+        this.setState({ errorFile: '' });
+      } else {
+        this.setState({ errorFile: 'you must select an image' });
+      }
     }
   };
 
@@ -179,11 +238,13 @@ class CardForm extends React.Component {
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Name
+                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorName}</span>
                   </label>
                   <input
                     ref={this.inputNameRef}
-                    onBlur={this.handleBlur}
                     onChange={this.handleChange}
+                    onBlur={this.handleBlur}
+                    value={this.state.inputName}
                     type="text"
                     name="name"
                     className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -195,13 +256,32 @@ class CardForm extends React.Component {
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Date
+                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorDate}</span>
                   </label>
                   <input
                     ref={this.inputDateRef}
                     onChange={this.handleChange}
                     onBlur={this.handleBlur}
+                    value={this.state.inputDate}
                     type="date"
                     name="date"
+                    className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+                <div className="col-span-6 sm:col-span-4">
+                  <label
+                    htmlFor="desc"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Add description of the card
+                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorDesc}</span>
+                  </label>
+                  <textarea
+                    ref={this.inputTextaria}
+                    onChange={this.handleChange}
+                    onBlur={this.handleBlur}
+                    value={this.state.description}
+                    name="desc"
                     className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -212,11 +292,13 @@ class CardForm extends React.Component {
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Some option
+                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorSelect}</span>
                   </label>
                   <select
                     ref={this.selectValueRef}
                     onChange={this.handleChange}
                     onBlur={this.handleBlur}
+                    value={this.state.selectValue}
                     name="country"
                     className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   >
@@ -231,23 +313,23 @@ class CardForm extends React.Component {
             <div className="overflow-hidden shadow sm:rounded-md">
               <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                 <fieldset>
-                  <legend
-                    ref={this.checkLegendRef}
-                    className="contents text-sm font-semibold leading-6 text-gray-900"
-                  >
+                  <legend className="contents text-sm font-semibold leading-6 text-gray-900">
                     Legend for checkboxes options
                   </legend>
-                  <div className="mt-4 space-y-4">
+                  <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorCheckbox}</p>
+                  <div className="mt-4">
                     {this.checkboxesArr.map((el, i) => {
                       return (
                         <div key={el + i} className="flex h-6 items-center text-sm leading-6">
                           <input
                             id={el}
                             onChange={this.handleMultyValue}
+                            onBlur={this.handleBlur}
                             name="checkboxes"
                             type="checkbox"
                             value={el}
-                            className="h-4 w-4 rounded border-gray-500 text-indigo-600 focus:ring-indigo-600"
+                            checked={this.state.checkboxValue.includes(el)}
+                            className="h-4 w-4 rounded border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label htmlFor={el} className="ml-3 font-medium text-gray-900">
                             {el}
@@ -258,23 +340,23 @@ class CardForm extends React.Component {
                   </div>
                 </fieldset>
                 <fieldset aria-required="true">
-                  <legend
-                    ref={this.radioLegendRef}
-                    className="contents text-sm font-semibold leading-6 text-gray-900"
-                  >
+                  <legend className="contents text-sm font-semibold leading-6 text-gray-900">
                     Legend for radiobuttons
                   </legend>
-                  <div aria-required="false" className="mt-4 space-y-4 aria-required:text-red-500">
+                  <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorRadio}</p>
+                  <div aria-required="false" className="mt-4 aria-required:text-red-500">
                     {this.radiosArr.map((el, i) => {
                       return (
                         <div key={i + el} className="flex items-center">
                           <input
                             id={el}
                             onChange={this.handleRadioValue}
+                            onBlur={this.handleBlur}
                             name="radioValue"
                             type="radio"
                             value={el}
-                            className="h-4 w-4 border-gray-500 text-indigo-600 focus:ring-indigo-600"
+                            checked={this.state.radioValue === el}
+                            className="h-4 w-4 border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
                           />
                           <label
                             htmlFor={el}
@@ -292,8 +374,8 @@ class CardForm extends React.Component {
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                       Photo
                     </label>
-                    <div className="mt-2 flex items-center">
-                      <div className="h-30 w-30 inline-block overflow-hidden bg-gray-100">
+                    <div className="mt-2 flex flex-col">
+                      <div className="block h-40 w-40 overflow-hidden bg-gray-100">
                         {(() => {
                           if (this.state.file && this.fileRef.current?.files) {
                             return <img src={this.state.file} />;
@@ -312,7 +394,7 @@ class CardForm extends React.Component {
                       </div>
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                        className="relative mt-2 w-40 cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                       >
                         <span>Upload a file</span>
                         <input
@@ -324,27 +406,28 @@ class CardForm extends React.Component {
                           className="sr-only"
                         />
                       </label>
+                      <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorFile}</p>
                     </div>
                   </div>
                 </fieldset>
                 <fieldset>
-                  <div className="mt-4 space-y-4">
+                  <div className="mt-4">
                     <div className="flex h-6 items-center text-sm leading-6">
                       <input
                         id="agree"
                         ref={this.inputAgreeRef}
                         onChange={this.handleChange}
+                        onBlur={this.handleBlur}
+                        checked={this.state.agree}
                         name="agree"
                         type="checkbox"
-                        className="h-4 w-4 rounded border-gray-500 text-indigo-600 focus:ring-indigo-600"
+                        className="h-4 w-4 rounded border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
                       />
                       <label htmlFor="agree" className="ml-3 font-medium text-gray-900">
                         Agree the terms
                       </label>
                     </div>
-                    <span className="ml-8 -mt-0 text-xs">
-                      {!this.state.agree ? 'You must agree the terms' : ''}
-                    </span>
+                    <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorAgree}</p>
                   </div>
                 </fieldset>
               </div>

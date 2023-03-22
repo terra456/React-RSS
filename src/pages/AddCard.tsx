@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardType } from 'types';
-import CardForm from '../components/cardForm/CardForm';
+import CardForm, { CardFormType } from '../components/cardForm/CardForm';
 import Cards from '../components/cards/Cards';
 
 class AddCard extends React.Component {
@@ -15,12 +15,13 @@ class AddCard extends React.Component {
     this.handleCardSubmit = this.handleCardSubmit.bind(this);
   }
 
-  handleCardSubmit = (obj) => {
+  handleCardSubmit = (obj: CardFormType) => {
     const newCard = {
-      year: obj.date,
+      year: obj.inputDate,
       imgSrc: obj.file,
       author: { en: obj.selectValue },
-      name: { en: obj.name },
+      name: { en: obj.inputName },
+      desc: obj.description,
     };
     this.setState({
       dataList: this.state.dataList.concat(newCard),
