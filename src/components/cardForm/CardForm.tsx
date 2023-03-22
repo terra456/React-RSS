@@ -1,18 +1,24 @@
 import React, { FormEvent } from 'react';
 import './components.css';
 
+type CardFormType = {
+  inputName: string;
+  inputDate: string;
+  selectValue: string;
+  checkboxValue: string[];
+  radioValue: string;
+  file: string;
+  agree: boolean;
+  isFormValid: boolean;
+};
+
 class CardForm extends React.Component {
-  state: {
-    inputName: string;
-    inputDate: string;
-    selectValue: string;
-    checkboxValue: string[];
-    radioValue: string;
-    image: string;
-    agree: boolean;
-    isFormValid: boolean;
+  state: CardFormType;
+
+  declare props: {
+    onFormSubmit: (obj: CardFormType) => void;
   };
-  constructor(props: string) {
+  constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
@@ -21,10 +27,11 @@ class CardForm extends React.Component {
       selectValue: '',
       checkboxValue: [],
       radioValue: '',
-      image: '',
+      file: '',
       agree: false,
       isFormValid: true,
     };
+    console.log(props);
   }
 
   selectsArr = ['select1', 'select2', 'select3', 'select4', 'select5', 'select6'];
@@ -37,20 +44,21 @@ class CardForm extends React.Component {
   selectValueRef: React.RefObject<HTMLSelectElement> = React.createRef();
   checkLegendRef: React.RefObject<HTMLLegendElement> = React.createRef();
   radioLegendRef: React.RefObject<HTMLLegendElement> = React.createRef();
-  imageRef: React.RefObject<HTMLInputElement> = React.createRef();
+  fileRef: React.RefObject<HTMLInputElement> = React.createRef();
   saveBtnRef: React.RefObject<HTMLButtonElement> = React.createRef();
 
   validateForm = () => {
-    const { inputName, inputDate, selectValue, checkboxValue, radioValue, image, agree } =
-      this.state;
+    const { inputName, inputDate, selectValue, checkboxValue, radioValue, agree } = this.state;
     let isFormValid = true;
     if (inputName === '') {
       this.inputNameRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
+      console.log('here');
     }
     if (inputDate === '') {
       this.inputDateRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
+      console.log('here');
     }
     if (selectValue === '' || selectValue === undefined) {
       this.selectValueRef.current?.setAttribute('aria-invalid', 'true');
@@ -59,28 +67,43 @@ class CardForm extends React.Component {
     if (checkboxValue.length === 0) {
       this.checkLegendRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
+      console.log('here');
     }
     if (radioValue === '' || radioValue === undefined) {
       this.radioLegendRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
+      console.log('here');
     }
-    // if (radioValue) {
-    //   // this.inputDateRef.current?.setAttribute('aria-invalid', 'true');
+    // if (file) {
+    //   this.fileRef.current?.setAttribute('aria-invalid', 'true');
     //   isFormValid = false;
+    //   console.log('here');
     // }
-    if (agree) {
+    if (!agree) {
       this.inputAgreeRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
+      console.log('here agree');
     }
 
     if (!isFormValid) {
       this.setState({ isFormValid: false });
     }
+    console.log(isFormValid);
     return isFormValid;
   };
 
   addCard() {
-    throw new Error('Method not implemented.');
+    this.props.onFormSubmit([this.state]);
+    // this.setState({
+    //   inputName: '',
+    //   inputDate: '',
+    //   selectValue: '',
+    //   checkboxValue: [],
+    //   radioValue: '',
+    //   file: '',
+    //   agree: false,
+    //   isFormValid: true,
+    // });
   }
 
   handleBlur = (e: InputEvent<HTMLInputElement>) => {
@@ -95,7 +118,6 @@ class CardForm extends React.Component {
       inputName: this.inputNameRef.current?.value,
       inputDate: this.inputDateRef.current?.value,
       selectValue: this.selectValueRef.current?.value,
-      image: this.imageRef.current?.value,
       agree: this.inputAgreeRef.current?.checked,
     });
   };
@@ -129,6 +151,19 @@ class CardForm extends React.Component {
       this.addCard();
     }
     console.log(this.state);
+  };
+
+  handleFile = () => {
+    if (
+      this.fileRef.current &&
+      this.fileRef.current.files &&
+      this.fileRef.current.files?.length > 0
+    ) {
+      const file = this.fileRef.current.files[0];
+      this.setState({
+        file: window.URL.createObjectURL(file),
+      });
+    }
   };
 
   render() {
@@ -250,6 +285,46 @@ class CardForm extends React.Component {
                         </div>
                       );
                     })}
+                  </div>
+                </fieldset>
+                <fieldset>
+                  <div>
+                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                      Photo
+                    </label>
+                    <div className="mt-2 flex items-center">
+                      <div className="h-30 w-30 inline-block overflow-hidden bg-gray-100">
+                        {(() => {
+                          if (this.state.file && this.fileRef.current?.files) {
+                            return <img src={this.state.file} />;
+                          } else {
+                            return (
+                              <svg
+                                className="h-full w-full text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            );
+                          }
+                        })()}
+                      </div>
+                      <label
+                        htmlFor="file-upload"
+                        className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                      >
+                        <span>Upload a file</span>
+                        <input
+                          id="file-upload"
+                          ref={this.fileRef}
+                          onChange={this.handleFile}
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                        />
+                      </label>
+                    </div>
                   </div>
                 </fieldset>
                 <fieldset>

@@ -1,14 +1,18 @@
 import React from 'react';
-import images from '../../assets/json/images.json';
+import { CardType } from 'types';
 import CardBlock from '../card/Card';
 import SearchBar from '../searchBar/SearchBar';
 
 class Cards extends React.Component {
-  constructor(props: string) {
+  declare props: {
+    dataList: CardType[];
+  };
+  constructor(props) {
     super(props);
   }
 
   render() {
+    const images = this.props.dataList;
     return (
       <div className="bg-white">
         <SearchBar />
@@ -19,7 +23,7 @@ class Cards extends React.Component {
             {images.map((el, i) => {
               if (typeof el !== 'string') {
                 return (
-                  <div key={i + el.name.ru} className="group relative">
+                  <div key={i + el.name.en} className="group relative">
                     <CardBlock {...el} />
                   </div>
                 );
