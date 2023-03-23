@@ -1,6 +1,8 @@
 import React, { FormEvent } from 'react';
 import InputCheckBox from '../formElements/inputCheckBox';
+import InputMultyple from '../formElements/inputMultyple';
 import InputString from '../formElements/inputString';
+import SelectOptions from '../formElements/selectOptions';
 import './components.css';
 
 export type CardFormType = {
@@ -22,6 +24,11 @@ export type CardFormType = {
   errorFile?: string;
   errorAgree?: string;
 };
+
+type LinkArray = {
+  name: string;
+  refLink: React.RefObject<HTMLInputElement>;
+}[];
 
 class CardForm extends React.Component {
   state: CardFormType;
@@ -55,8 +62,18 @@ class CardForm extends React.Component {
   }
 
   selectsArr = ['select1', 'select2', 'select3', 'select4', 'select5', 'select6'];
-  checkboxesArr = ['option1', 'option2', 'option3', 'option4', 'option5'];
-  radiosArr = ['value1', 'value2', 'value3'];
+  checkboxesArr: LinkArray = ['option1', 'option2', 'option3', 'option4', 'option5'].map((el) => {
+    return {
+      name: el,
+      refLink: React.createRef(),
+    };
+  });
+  radiosArr: LinkArray = ['value1', 'value2', 'value3'].map((el) => {
+    return {
+      name: el,
+      refLink: React.createRef(),
+    };
+  });
 
   inputNameRef: React.RefObject<HTMLInputElement> = React.createRef();
   inputDateRef: React.RefObject<HTMLInputElement> = React.createRef();
@@ -65,6 +82,7 @@ class CardForm extends React.Component {
   selectValueRef: React.RefObject<HTMLSelectElement> = React.createRef();
   fileRef: React.RefObject<HTMLInputElement> = React.createRef();
   saveBtnRef: React.RefObject<HTMLButtonElement> = React.createRef();
+  formRef: React.RefObject<HTMLFormElement> = React.createRef();
 
   validateForm = () => {
     const {
@@ -108,7 +126,7 @@ class CardForm extends React.Component {
     }
     if (checkboxValue.length === 0) {
       isFormValid = false;
-      this.setState({ errorCheckbox: 'you must select any value' });
+      this.setState({ errorCheckbox: 'you must select one or more value' });
     } else {
       this.setState({ errorCheckbox: '' });
     }
@@ -136,12 +154,13 @@ class CardForm extends React.Component {
     if (!isFormValid) {
       this.setState({ isFormValid: false });
     }
-    console.log(isFormValid);
+    console.log(this.state);
     return isFormValid;
   };
 
   addCard() {
     this.props.onFormSubmit(this.state);
+    this.formRef.current?.reset();
     this.setState({
       inputName: '',
       inputDate: '',
@@ -163,44 +182,14 @@ class CardForm extends React.Component {
     });
   }
 
-  handleBlur = (e: InputEvent<HTMLInputElement>) => {
-    e.target.setAttribute('aria-invalid', 'false');
+  handleBlur = () => {
     if (!this.state.isFormValid) {
       this.setState({ isFormValid: true });
     }
   };
 
-  handleChange = () => {
-    this.setState({
-      inputName: this.inputNameRef.current?.value,
-      inputDate: this.inputDateRef.current?.value,
-      description: this.inputTextaria.current?.value,
-      selectValue: this.selectValueRef.current?.value,
-      agree: this.inputAgreeRef.current?.checked,
-    });
-    console.log(this.inputTextaria);
-    console.log(this.inputNameRef);
-  };
-
-  handleMultyValue = (e: InputEvent<HTMLInputElement>) => {
-    const { checkboxValue } = this.state;
-    const value = e.target.value;
-    if (value) {
-      const ind = checkboxValue.findIndex((el) => el === value);
-      ind >= 0 ? checkboxValue.splice(ind, 1) : checkboxValue.push(value);
-      this.setState({
-        checkboxValue: checkboxValue,
-      });
-    }
-  };
-
-  handleRadioValue = (e: InputEvent<HTMLInputElement>) => {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value,
-    });
+  getCheckedValues = (arr: LinkArray): string[] => {
+    return arr.filter((el) => el.refLink.current?.checked).map((el) => el.name);
   };
 
   handleSubmit = (event: FormEvent) => {
@@ -212,11 +201,13 @@ class CardForm extends React.Component {
         description: this.inputTextaria.current?.value,
         selectValue: this.selectValueRef.current?.value,
         agree: this.inputAgreeRef.current?.checked,
+        checkboxValue: this.getCheckedValues(this.checkboxesArr),
+        radioValue: this.getCheckedValues(this.radiosArr)[0],
+        isFormValid: false,
       },
       () => {
         if (this.validateForm()) {
           this.addCard();
-          console.log(this.state);
         }
       }
     );
@@ -243,7 +234,7 @@ class CardForm extends React.Component {
   render() {
     return (
       <div className="mt-5 md:col-span-2 md:mt-0">
-        <form action="#" method="POST" onSubmit={this.handleSubmit}>
+        <form ref={this.formRef} onSubmit={this.handleSubmit} onChange={this.handleBlur}>
           <div className="overflow-hidden shadow sm:rounded-md">
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="grid grid-cols-6 gap-6">
@@ -266,89 +257,32 @@ class CardForm extends React.Component {
                   refLink={this.inputTextaria}
                 />
 
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="country"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Some option
-                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorSelect}</span>
-                  </label>
-                  <select
-                    ref={this.selectValueRef}
-                    onChange={this.handleChange}
-                    onBlur={this.handleBlur}
-                    value={this.state.selectValue}
-                    name="country"
-                    className="mt-2 block w-full rounded-md border-0 bg-white py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  >
-                    {this.selectsArr.map((el, i) => {
-                      return <option key={i + el}>{el}</option>;
-                    })}
-                  </select>
-                </div>
+                <SelectOptions
+                  name={'nameSelection'}
+                  array={this.selectsArr}
+                  refLink={this.selectValueRef}
+                  desc="Select some option"
+                  error={this.state.errorSelect}
+                />
               </div>
             </div>
 
             <div className="overflow-hidden shadow sm:rounded-md">
               <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
-                <fieldset>
-                  <legend className="contents text-sm font-semibold leading-6 text-gray-900">
-                    Legend for checkboxes options
-                  </legend>
-                  <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorCheckbox}</p>
-                  <div className="mt-4">
-                    {this.checkboxesArr.map((el, i) => {
-                      return (
-                        <div key={el + i} className="flex h-6 items-center text-sm leading-6">
-                          <input
-                            id={el}
-                            onChange={this.handleMultyValue}
-                            onBlur={this.handleBlur}
-                            name="checkboxes"
-                            type="checkbox"
-                            value={el}
-                            checked={this.state.checkboxValue.includes(el)}
-                            className="h-4 w-4 rounded border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
-                          />
-                          <label htmlFor={el} className="ml-3 font-medium text-gray-900">
-                            {el}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </fieldset>
-                <fieldset aria-required="true">
-                  <legend className="contents text-sm font-semibold leading-6 text-gray-900">
-                    Legend for radiobuttons
-                  </legend>
-                  <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorRadio}</p>
-                  <div aria-required="false" className="mt-4 aria-required:text-red-500">
-                    {this.radiosArr.map((el, i) => {
-                      return (
-                        <div key={i + el} className="flex items-center">
-                          <input
-                            id={el}
-                            onChange={this.handleRadioValue}
-                            onBlur={this.handleBlur}
-                            name="radioValue"
-                            type="radio"
-                            value={el}
-                            checked={this.state.radioValue === el}
-                            className="h-4 w-4 border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
-                          />
-                          <label
-                            htmlFor={el}
-                            className="ml-3 block text-sm font-medium leading-6 text-gray-900"
-                          >
-                            {el}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </fieldset>
+                <InputMultyple
+                  name={'checkboxes'}
+                  type={'checkbox'}
+                  desc="Legend for checkboxes options"
+                  error={this.state.errorCheckbox}
+                  array={this.checkboxesArr}
+                />
+                <InputMultyple
+                  name={'radio-values'}
+                  type={'radio'}
+                  desc="Legend for radiobuttons"
+                  error={this.state.errorRadio}
+                  array={this.radiosArr}
+                />
                 <fieldset>
                   <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -396,26 +330,6 @@ class CardForm extends React.Component {
                   error={this.state.errorAgree}
                   refLink={this.inputAgreeRef}
                 />
-                <fieldset>
-                  {/* <div className="mt-4">
-                    <div className="flex h-6 items-center text-sm leading-6">
-                      <input
-                        id="agree"
-                        ref={this.inputAgreeRef}
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                        checked={this.state.agree}
-                        name="agree"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
-                      />
-                      <label htmlFor="agree" className="ml-3 font-medium text-gray-900">
-                        Agree the terms
-                      </label>
-                    </div>
-                    <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorAgree}</p>
-                  </div> */}
-                </fieldset>
               </div>
             </div>
             <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
