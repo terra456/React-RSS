@@ -1,4 +1,6 @@
 import React, { FormEvent } from 'react';
+import InputCheckBox from '../formElements/inputCheckBox';
+import InputString from '../formElements/inputString';
 import './components.css';
 
 export type CardFormType = {
@@ -176,6 +178,8 @@ class CardForm extends React.Component {
       selectValue: this.selectValueRef.current?.value,
       agree: this.inputAgreeRef.current?.checked,
     });
+    console.log(this.inputTextaria);
+    console.log(this.inputNameRef);
   };
 
   handleMultyValue = (e: InputEvent<HTMLInputElement>) => {
@@ -201,10 +205,21 @@ class CardForm extends React.Component {
 
   handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (this.validateForm()) {
-      this.addCard();
-    }
-    console.log(this.state);
+    this.setState(
+      {
+        inputName: this.inputNameRef.current?.value,
+        inputDate: this.inputDateRef.current?.value,
+        description: this.inputTextaria.current?.value,
+        selectValue: this.selectValueRef.current?.value,
+        agree: this.inputAgreeRef.current?.checked,
+      },
+      () => {
+        if (this.validateForm()) {
+          this.addCard();
+          console.log(this.state);
+        }
+      }
+    );
   };
 
   handleFile = () => {
@@ -232,59 +247,24 @@ class CardForm extends React.Component {
           <div className="overflow-hidden shadow sm:rounded-md">
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="grid grid-cols-6 gap-6">
-                <div className="col-span-6 sm:col-span-4">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Name
-                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorName}</span>
-                  </label>
-                  <input
-                    ref={this.inputNameRef}
-                    onChange={this.handleChange}
-                    onBlur={this.handleBlur}
-                    value={this.state.inputName}
-                    type="text"
-                    name="name"
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-                <div className="col-span-6 sm:col-span-4">
-                  <label
-                    htmlFor="date"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Date
-                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorDate}</span>
-                  </label>
-                  <input
-                    ref={this.inputDateRef}
-                    onChange={this.handleChange}
-                    onBlur={this.handleBlur}
-                    value={this.state.inputDate}
-                    type="date"
-                    name="date"
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-                <div className="col-span-6 sm:col-span-4">
-                  <label
-                    htmlFor="desc"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Add description of the card
-                    <span className="ml-8 mt-0 text-xs text-red-500">{this.state.errorDesc}</span>
-                  </label>
-                  <textarea
-                    ref={this.inputTextaria}
-                    onChange={this.handleChange}
-                    onBlur={this.handleBlur}
-                    value={this.state.description}
-                    name="desc"
-                    className="mt-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
+                <InputString
+                  type="text"
+                  name="name"
+                  error={this.state.errorName}
+                  refLink={this.inputNameRef}
+                />
+                <InputString
+                  type="date"
+                  name="date"
+                  error={this.state.inputDate}
+                  refLink={this.inputDateRef}
+                />
+                <InputString
+                  type="textarea"
+                  name="desc"
+                  error={this.state.errorDesc}
+                  refLink={this.inputTextaria}
+                />
 
                 <div className="col-span-6 sm:col-span-3">
                   <label
@@ -410,8 +390,14 @@ class CardForm extends React.Component {
                     </div>
                   </div>
                 </fieldset>
+                <InputCheckBox
+                  name="agree"
+                  desc="Agree the terms"
+                  error={this.state.errorAgree}
+                  refLink={this.inputAgreeRef}
+                />
                 <fieldset>
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <div className="flex h-6 items-center text-sm leading-6">
                       <input
                         id="agree"
@@ -428,7 +414,7 @@ class CardForm extends React.Component {
                       </label>
                     </div>
                     <p className="ml-8 mt-0 text-xs text-red-500">{this.state.errorAgree}</p>
-                  </div>
+                  </div> */}
                 </fieldset>
               </div>
             </div>
