@@ -97,28 +97,24 @@ class CardForm extends React.Component {
     } = this.state;
     let isFormValid = true;
     if (inputName === '') {
-      this.inputNameRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
       this.setState({ errorName: 'name cant be empty' });
     } else {
       this.setState({ errorName: '' });
     }
     if (inputDate === '') {
-      this.inputDateRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
       this.setState({ errorDate: 'date cant be empty' });
     } else {
       this.setState({ errorDate: '' });
     }
     if (description.length <= 10) {
-      this.inputTextaria.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
       this.setState({ errorDesc: 'description mast be 10 and more' });
     } else {
       this.setState({ errorDesc: '' });
     }
     if (selectValue === '' || selectValue === undefined) {
-      this.selectValueRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
       this.setState({ errorSelect: 'you must select any value' });
     } else {
@@ -144,7 +140,6 @@ class CardForm extends React.Component {
       this.setState({ errorFile: '' });
     }
     if (!agree) {
-      this.inputAgreeRef.current?.setAttribute('aria-invalid', 'true');
       isFormValid = false;
       this.setState({ errorAgree: 'You must agree the terms' });
     } else {
@@ -247,7 +242,7 @@ class CardForm extends React.Component {
                 <InputString
                   type="date"
                   name="date"
-                  error={this.state.inputDate}
+                  error={this.state.errorDate}
                   refLink={this.inputDateRef}
                 />
                 <InputString
