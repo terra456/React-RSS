@@ -39,6 +39,7 @@ class InputString extends React.Component<Props, State> {
         ) : (
           <input
             id={this.state.id}
+            alt={this.state.id}
             ref={this.props.refLink}
             type={this.props.type}
             name={this.props.name.toLowerCase().trim()}

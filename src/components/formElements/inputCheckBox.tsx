@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface Props {
+export interface Props {
   name: string;
   desc?: string;
   error?: string;
-  refLink: React.RefObject<HTMLInputElement> | React.RefObject<HTMLTextAreaElement>;
+  refLink: React.RefObject<HTMLInputElement>;
 }
 
 interface State {

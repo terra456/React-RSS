@@ -2,11 +2,12 @@ import React from 'react';
 import { CardType } from 'types';
 import CardBlock from '../card/Card';
 
-class Cards extends React.Component {
-  declare props: {
-    dataList: CardType[];
-  };
-  constructor(props) {
+export interface Props {
+  dataList: CardType[];
+}
+
+class Cards extends React.Component<Props> {
+  constructor(props: Props) {
     super(props);
   }
 

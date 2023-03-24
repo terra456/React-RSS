@@ -5,15 +5,19 @@ import InputString from '../formElements/inputString';
 import SelectOptions from '../formElements/selectOptions';
 import './components.css';
 
-export type CardFormType = {
-  inputName: string;
-  inputDate: string;
-  description: string;
-  selectValue: string;
-  checkboxValue: string[];
-  radioValue: string;
-  file: string;
-  agree: boolean;
+export interface Props {
+  onFormSubmit: (obj: State) => void;
+}
+
+export interface State {
+  inputName: string | undefined;
+  inputDate: string | undefined;
+  description: string | undefined;
+  selectValue: string | undefined;
+  checkboxValue: string[] | undefined;
+  radioValue: string | undefined;
+  file: string | undefined;
+  agree: boolean | undefined;
   isFormValid: boolean;
   errorName?: string;
   errorDate?: string;
@@ -23,20 +27,15 @@ export type CardFormType = {
   errorRadio?: string;
   errorFile?: string;
   errorAgree?: string;
-};
+}
 
 type LinkArray = {
   name: string;
   refLink: React.RefObject<HTMLInputElement>;
 }[];
 
-class CardForm extends React.Component {
-  state: CardFormType;
-
-  declare props: {
-    onFormSubmit: (obj: CardFormType) => void;
-  };
-  constructor(props) {
+class CardForm extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
@@ -95,62 +94,64 @@ class CardForm extends React.Component {
       agree,
       file,
     } = this.state;
-    let isFormValid = true;
+    let isValid = true;
     if (inputName === '') {
-      isFormValid = false;
+      isValid = false;
       this.setState({ errorName: 'name cant be empty' });
     } else {
       this.setState({ errorName: '' });
     }
     if (inputDate === '') {
-      isFormValid = false;
+      isValid = false;
       this.setState({ errorDate: 'date cant be empty' });
     } else {
       this.setState({ errorDate: '' });
     }
-    if (description.length <= 10) {
-      isFormValid = false;
+    if (description && description.length <= 10) {
+      isValid = false;
       this.setState({ errorDesc: 'description mast be 10 and more' });
     } else {
       this.setState({ errorDesc: '' });
     }
     if (selectValue === '' || selectValue === undefined) {
-      isFormValid = false;
+      isValid = false;
       this.setState({ errorSelect: 'you must select any value' });
     } else {
       this.setState({ errorSelect: '' });
     }
-    if (checkboxValue.length === 0) {
-      isFormValid = false;
+    if (checkboxValue && checkboxValue.length === 0) {
+      isValid = false;
       this.setState({ errorCheckbox: 'you must select one or more value' });
     } else {
       this.setState({ errorCheckbox: '' });
     }
     if (radioValue === '' || radioValue === undefined) {
-      isFormValid = false;
+      isValid = false;
       this.setState({ errorRadio: 'you must select any value' });
     } else {
       this.setState({ errorRadio: '' });
     }
     if (file === '') {
       this.fileRef.current?.setAttribute('aria-invalid', 'true');
-      isFormValid = false;
+      isValid = false;
       this.setState({ errorFile: 'add any picture' });
     } else {
       this.setState({ errorFile: '' });
     }
     if (!agree) {
-      isFormValid = false;
+      isValid = false;
       this.setState({ errorAgree: 'You must agree the terms' });
     } else {
       this.setState({ errorAgree: '' });
     }
 
-    if (!isFormValid) {
+    if (!isValid) {
       this.setState({ isFormValid: false });
     }
     console.log(this.state);
-    return isFormValid;
+    if (isValid) {
+      this.addCard();
+    }
   };
 
   addCard() {
@@ -201,9 +202,7 @@ class CardForm extends React.Component {
         isFormValid: false,
       },
       () => {
-        if (this.validateForm()) {
-          this.addCard();
-        }
+        this.validateForm();
       }
     );
   };
@@ -229,7 +228,12 @@ class CardForm extends React.Component {
   render() {
     return (
       <div className="mt-5 md:col-span-2 md:mt-0">
-        <form ref={this.formRef} onSubmit={this.handleSubmit} onChange={this.handleBlur}>
+        <form
+          ref={this.formRef}
+          onSubmit={this.handleSubmit}
+          onChange={this.handleBlur}
+          data-testid="form"
+        >
           <div className="overflow-hidden shadow sm:rounded-md">
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="grid grid-cols-6 gap-6">
