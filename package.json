@@ -15,7 +15,7 @@
   },
   "lint-staged": {
     "**/*": [
-      "npm run lint:write",
+      "npm run lint",
       "git add"
     ]
   },
