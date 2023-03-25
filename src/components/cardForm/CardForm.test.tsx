@@ -19,10 +19,6 @@ const handleCardSubmit = (obj: State) => {
   );
 };
 
-// window.URL.createObjectURL(File) => {
-//   return File;
-// }
-
 describe('Checkbox render', () => {
   it('render checkbox input and label with mock values', async () => {
     render(<CardForm onFormSubmit={handleCardSubmit} />);

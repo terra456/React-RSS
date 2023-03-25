@@ -22,6 +22,8 @@ class AddCard extends React.Component {
       author: { en: obj.selectValue },
       name: { en: obj.inputName },
       desc: obj.description,
+      options: obj.checkboxValue,
+      category: obj.radioValue,
     };
     this.setState({
       dataList: this.state.dataList.concat(newCard),

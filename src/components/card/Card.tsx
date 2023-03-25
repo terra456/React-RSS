@@ -29,6 +29,19 @@ class CardBlock extends React.Component {
           <h4 className="mt-1 text-sm text-gray-500">{this.info.author.en}</h4>
           <p className="mt-1 text-sm text-gray-500">{this.info.desc}</p>
         </div>
+        <div className="m-4 flex flex-col">
+          <p className="mt-1 text-sm text-gray-500">{this.info.category}</p>
+          <p className="mt-1 text-sm text-gray-500">
+            {this.info.options?.map((el, i) => {
+              return (
+                <span key={el + i}>
+                  {el}
+                  {i !== this.info.options.length - 1 ? ', ' : ''}
+                </span>
+              );
+            })}
+          </p>
+        </div>
         <div className="flex grow items-center justify-items-start place-self-end py-3 px-3">
           <p className="mr-3">
             <i className="fa fa-thumbs-up mr-1"></i>

@@ -4,6 +4,8 @@ export type CardType = {
   imgSrc?: string;
   author: { ru?: string; en: string };
   name: { ru?: string; en: string };
+  options?: string[];
+  category?: string;
   desc?: string;
   likes?: string;
   dislikes?: string;
