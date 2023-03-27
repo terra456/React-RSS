@@ -10,8 +10,6 @@ lerna-debug.log*
 node_modules
 dist/
 public/
-coverage/
-coverage
 dist-ssr
 *.local
 

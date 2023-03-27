@@ -11,7 +11,6 @@ afterEach(() => {
 });
 
 const handleCardSubmit = (obj: State) => {
-  console.log(obj);
   render(
     <div>
       <p>{(obj.inputDate, obj.file, obj.selectValue, obj.inputName)}</p>
@@ -30,7 +29,7 @@ describe('Checkbox render', () => {
 
   it('send some information inputs, validate and clear', async () => {
     window.URL.createObjectURL = (file: Blob) => {
-      return './test/chucknorris.png';
+      return './test/smth.png';
     };
     render(<CardForm onFormSubmit={handleCardSubmit} />);
     const form = await screen.getByTestId('form');

@@ -57,7 +57,6 @@ class CardForm extends React.Component<Props, State> {
       errorFile: '',
       errorAgree: '',
     };
-    console.log(props);
   }
 
   selectsArr = ['select1', 'select2', 'select3', 'select4', 'select5', 'select6'];
@@ -148,7 +147,6 @@ class CardForm extends React.Component<Props, State> {
     if (!isValid) {
       this.setState({ isFormValid: false });
     }
-    console.log(this.state);
     if (isValid) {
       this.addCard();
     }
