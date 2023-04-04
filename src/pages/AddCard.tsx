@@ -1,6 +1,6 @@
 import React from 'react';
-import { CardType } from 'types';
-import CardForm, { State } from '../components/cardForm/CardForm';
+import { CardType, IFormValues } from 'types';
+import CardForm from '../components/cardForm/CardForm';
 import Cards from '../components/cards/Cards';
 
 class AddCard extends React.Component {
@@ -15,13 +15,13 @@ class AddCard extends React.Component {
     this.handleCardSubmit = this.handleCardSubmit.bind(this);
   }
 
-  handleCardSubmit = (obj: State) => {
+  handleCardSubmit = (obj: IFormValues) => {
     const newCard: CardType = {
-      year: obj.inputDate || '01.01.20',
-      imgSrc: obj.file,
+      year: obj.date || '01.01.20',
+      imgSrc: obj.fileSrc,
       author: { en: obj.selectValue || 'no' },
-      name: { en: obj.inputName || 'no' },
-      desc: obj.description,
+      name: { en: obj.name || 'no' },
+      desc: obj.desc,
       options: obj.checkboxValue,
       category: obj.radioValue,
     };

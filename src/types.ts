@@ -11,3 +11,14 @@ export type CardType = {
   dislikes?: string;
   watch?: string;
 };
+
+export interface IFormValues {
+  name: string;
+  date: string;
+  desc: string;
+  selectValue: string;
+  checkboxValue: string[];
+  radioValue: string;
+  file: string;
+  agree: boolean;
+}
