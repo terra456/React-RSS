@@ -19,6 +19,7 @@ export interface IFormValues {
   selectValue: string;
   checkboxValue: string[];
   radioValue: string;
-  file: string;
+  file: Blob[];
+  fileSrc?: string;
   agree: boolean;
 }

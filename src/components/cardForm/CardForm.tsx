@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { IFormValues } from 'types';
-// import InputCheckBox from '../formElements/inputCheckBox';
+import InputCheckBox from '../formElements/inputCheckBox';
 import InputMultyple from '../formElements/inputMultyple';
 import InputString from '../formElements/inputString';
 import SelectOptions from '../formElements/selectOptions';
@@ -16,18 +16,21 @@ function CardForm(props: Props) {
     register,
     handleSubmit,
     setError,
-    getValues,
+    watch,
     setValue,
+    reset,
     // Read the formState before render to subscribe the form state through the Proxy
-    formState: { errors, isDirty, isSubmitting, touchedFields },
+    formState: { errors, isDirty, isValid },
   } = useForm();
+
+  const watchFile = watch('fileSrc');
 
   const selectsArr: string[] = ['select1', 'select2', 'select3', 'select4', 'select5', 'select6'];
   const checkboxesArr: string[] = ['option1', 'option2', 'option3', 'option4', 'option5'];
   const radiosArr: string[] = ['value1', 'value2', 'value3'];
 
   const validateForm = (data: IFormValues) => {
-    const { name, date, desc, selectValue, checkboxValue, radioValue, file } = data;
+    const { name, date, desc, selectValue, checkboxValue, radioValue, file, agree } = data;
     let isValid = true;
     if (name === '') {
       isValid = false;
@@ -53,28 +56,27 @@ function CardForm(props: Props) {
       isValid = false;
       setError('radioValue', { type: 'custom', message: 'you must select any value' });
     }
-    if (!file[0].type.startsWith('image')) {
-      // fileRef.current?.setAttribute('aria-invalid', 'true');
+    if (!agree) {
+      isValid = false;
+      setError('agree', { type: 'custom', message: 'You must agree the terms' });
+    }
+    if (!file[0]) {
       isValid = false;
       setError('file', { type: 'custom', message: 'add any picture' });
-    } else {
-      console.log(file);
     }
-    // if (!agree) {
-    //   isValid = false;
-    //   setState({ errorAgree: 'You must agree the terms' });
-    // } else {
-    //   setState({ errorAgree: '' });
-    // }
-
     if (isValid) {
       addCard(data);
     }
   };
 
+  const resetForm = () => {
+    reset();
+  };
+
   const addCard = (data: IFormValues) => {
+    data.fileSrc = watchFile;
     props.onFormSubmit(data);
-    // formRef.current?.reset();
+    resetForm();
   };
 
   const onSubmit = (data: IFormValues) => {
@@ -82,20 +84,18 @@ function CardForm(props: Props) {
     validateForm(data);
   };
 
-  const handleFile = () => {
-    console.log(getValues('file'));
-    if (getValues('file')[0].type.startsWith('image')) {
-      setValue('fileSrc', window.URL.createObjectURL(getValues('file')[0]));
+  const handleFile = (e) => {
+    console.log(e.target.files[0]);
+    if (e.target.files[0].type.startsWith('image')) {
+      setValue('fileSrc', window.URL.createObjectURL(e.target.files[0]));
+    } else {
+      setError('file', { type: 'custom', message: 'you must add an image' });
     }
   };
 
   return (
     <div className="mt-5 md:col-span-2 md:mt-0">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        // onChange={handleBlur}
-        data-testid="form"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} data-testid="form">
         <div className="overflow-hidden shadow sm:rounded-md">
           <div className="bg-white px-4 py-5 sm:p-6">
             <div className="grid grid-cols-6 gap-6">
@@ -151,8 +151,8 @@ function CardForm(props: Props) {
                   <div className="mt-2 flex flex-col">
                     <div className="block h-40 w-40 overflow-hidden bg-gray-100">
                       {(() => {
-                        if (getValues('fileSrc')) {
-                          return <img src={getValues('fileSrc')} />;
+                        if (watchFile) {
+                          return <img src={watchFile} />;
                         } else {
                           return (
                             <svg
@@ -173,7 +173,7 @@ function CardForm(props: Props) {
                       <span>Upload a file</span>
                       <input
                         id="file-upload"
-                        {...register('file', { required: true })}
+                        {...register('file')}
                         onChange={handleFile}
                         name="file"
                         type="file"
@@ -184,17 +184,17 @@ function CardForm(props: Props) {
                   </div>
                 </div>
               </fieldset>
-              {/*<InputCheckBox
+              <InputCheckBox
                 name="agree"
                 desc="Agree the terms"
-                error={state.errorAgree}
-                refLink={inputAgreeRef}
-              />*/}
+                register={register}
+                error={errors.agree?.message}
+              />
             </div>
           </div>
           <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <button
-              // disabled={isDirty}
+              disabled={!isDirty || !isValid}
               type="submit"
               className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:bg-gray-500 disabled:hover:bg-gray-500"
             >

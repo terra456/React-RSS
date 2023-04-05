@@ -1,42 +1,33 @@
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { IFormValues } from 'types';
 
 export interface Props {
   name: string;
   desc?: string;
   error?: string;
-  refLink: React.RefObject<HTMLInputElement>;
+  register: UseFormRegister<IFormValues>;
 }
 
-interface State {
-  id: string;
-}
+function InputCheckBox({ name, desc, register, error }: Props) {
+  const id = name.trim().split(' ')[0].toLowerCase();
 
-class InputCheckBox extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      id: this.props.name.trim().split(' ')[0].toLowerCase(),
-    };
-  }
-
-  render() {
-    return (
-      <div className="mt-4">
-        <div className="flex h-6 items-center text-sm leading-6">
-          <input
-            id={this.state.id}
-            ref={this.props.refLink}
-            name={this.state.id}
-            type="checkbox"
-            className="h-4 w-4 rounded border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
-          />
-          <label htmlFor={this.state.id} className="ml-3 font-medium text-gray-900">
-            {this.props.desc ? this.props.desc : this.props.name}
-          </label>
-        </div>
-        <p className="ml-8 mt-0 text-xs text-red-500">{this.props.error}</p>
+  return (
+    <div className="mt-4">
+      <div className="flex h-6 items-center text-sm leading-6">
+        <input
+          id={id}
+          {...register(name)}
+          name={name}
+          type="checkbox"
+          className="h-4 w-4 rounded border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600"
+        />
+        <label htmlFor={id} className="ml-3 font-medium text-gray-900">
+          {desc ? desc : name}
+        </label>
       </div>
-    );
-  }
+      <p className="ml-8 mt-0 text-xs text-red-500">{error}</p>
+    </div>
+  );
 }
 export default InputCheckBox;
