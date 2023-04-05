@@ -1,19 +1,16 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 function SearchBar() {
-  const [searchValue, setSearchValue] = useState('');
-
-  const newLocal = localStorage.getItem('searchStr');
-  if (newLocal) {
-    setSearchValue(newLocal);
-  }
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchStr') || undefined);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(event.target.value);
   };
 
   const handleSubmit = (event: FormEvent) => {
-    console.log('Was submitted: ' + searchValue);
+    if (searchValue) {
+      localStorage.setItem('searchStr', searchValue);
+    }
     event.preventDefault();
   };
 
