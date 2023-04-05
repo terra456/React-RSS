@@ -3,17 +3,18 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import selectEvent from 'react-select-event';
+import { IFormValues } from 'types';
 import { afterEach } from 'vitest';
-import CardForm, { State } from './CardForm';
+import CardForm from './CardForm';
 
 afterEach(() => {
   cleanup();
 });
 
-const handleCardSubmit = (obj: State) => {
+const handleCardSubmit = (obj: IFormValues) => {
   render(
     <div>
-      <p>{(obj.inputDate, obj.file, obj.selectValue, obj.inputName)}</p>
+      <p>{(obj.date, obj.file, obj.selectValue, obj.name)}</p>
     </div>
   );
 };
@@ -29,6 +30,7 @@ describe('Checkbox render', () => {
 
   it('send some information inputs, validate and clear', async () => {
     window.URL.createObjectURL = (file: Blob) => {
+      file;
       return './test/smth.png';
     };
     render(<CardForm onFormSubmit={handleCardSubmit} />);
@@ -40,12 +42,12 @@ describe('Checkbox render', () => {
     fireEvent.change(textInputs[1], {
       target: { value: 'Some Description' },
     });
-    await selectEvent.select(screen.getByRole('combobox'), 'select1');
+    await selectEvent.select(await screen.getByRole('combobox'), 'select2');
     expect(textInputs[0]).toHaveValue('Name of the card');
     expect(form).toHaveFormValues({
       name: 'Name of the card',
       desc: 'Some Description',
-      nameSelection: 'select1',
+      nameSelection: 'select2',
     });
     expect(await screen.getByRole('button')).not.toBeDisabled();
     await userEvent.click(await screen.getByRole('button'));

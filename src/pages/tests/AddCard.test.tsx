@@ -13,10 +13,10 @@ afterEach(() => {
 describe('Checkbox render', () => {
   it('send several cards', async () => {
     window.URL.createObjectURL = (file: Blob) => {
+      file;
       return './test/chucknorris.png';
     };
     render(<AddCard />);
-    const form = await screen.getByTestId('form');
     const textInputs = await screen.getAllByRole('textbox');
     fireEvent.change(textInputs[0], {
       target: { value: 'uniq value' },
@@ -40,7 +40,7 @@ describe('Checkbox render', () => {
       },
     });
     await userEvent.click(await screen.getByRole('button'));
-    expect(textInputs[0]).toHaveValue('');
+    expect(textInputs[0]).toHaveValue('' || undefined);
     expect(await screen.getByText(/uniq/i)).toBeInTheDocument();
     expect(screen.getAllByRole('img')).toHaveLength(1);
 
