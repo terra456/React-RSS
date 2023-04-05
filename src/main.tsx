@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '',
-        element: <MainPage dataList={[]} />,
+        element: <MainPage />,
       },
       {
         path: 'add-card',
