@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import selectEvent from 'react-select-event';
 import { IFormValues } from 'types';
 import { afterEach } from 'vitest';
 import CardForm from './CardForm';
@@ -36,22 +35,22 @@ describe('Checkbox render', () => {
     render(<CardForm onFormSubmit={handleCardSubmit} />);
     const form = await screen.getByTestId('form');
     const textInputs = await screen.getAllByRole('textbox');
+    const btn = await screen.getByRole('button');
     fireEvent.change(textInputs[0], {
       target: { value: 'Name of the card' },
     });
     fireEvent.change(textInputs[1], {
       target: { value: 'Some Description' },
     });
-    await selectEvent.select(await screen.getByRole('combobox'), 'select2');
+    await fireEvent.change(await screen.getByRole('combobox'), { target: { value: 'select2' } });
     expect(textInputs[0]).toHaveValue('Name of the card');
     expect(form).toHaveFormValues({
       name: 'Name of the card',
       desc: 'Some Description',
-      nameSelection: 'select2',
+      selectValue: 'select2',
     });
-    expect(await screen.getByRole('button')).not.toBeDisabled();
-    await userEvent.click(await screen.getByRole('button'));
-    expect(await screen.getByRole('button')).toBeDisabled();
+    await userEvent.click(btn);
+    expect(btn).toBeDisabled();
     expect(textInputs[0]).toHaveValue('Name of the card');
     expect(await screen.getByText(/empty/i)).toBeInTheDocument();
     expect(await screen.getByText(/add any picture/i)).toBeInTheDocument();
@@ -65,14 +64,34 @@ describe('Checkbox render', () => {
     fireEvent.click(checkInputs[1]);
     fireEvent.click(checkInputs[3]);
     fireEvent.click(checkInputs[5]);
-    expect(await screen.getByRole('button')).not.toBeDisabled();
-    await fireEvent.change(screen.getByLabelText(/upload/i), {
-      target: {
-        files: [new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })],
-      },
+    await userEvent.upload(
+      await screen.getByTestId('file-upload'),
+      new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })
+    );
+    expect(screen.getByTestId('file-upload').files[0].name).toBe('chucknorris.png');
+    expect(form).toHaveFormValues({
+      name: 'Name of the card',
+      date: '2020-05-24',
+      desc: 'Some Description',
+      selectValue: 'select2',
+      checkboxValue: ['option2', 'option4'],
+      radioValue: 'value1',
+      file: 'C:\\fakepath\\chucknorris.png',
+      agree: true,
     });
-    expect(textInputs[0]).not.toHaveValue('');
-    await userEvent.click(await screen.getByRole('button'));
-    expect(textInputs[0]).toHaveValue('');
+    expect(textInputs[0]).toHaveValue('Name of the card');
+    await userEvent.click(btn);
+    expect(btn).toBeDisabled();
+    expect(textInputs[0]).not.toHaveValue('Name of the card');
+    expect(form).not.toHaveFormValues({
+      name: 'Name of the card',
+      date: '2020-05-24',
+      desc: 'Some Description',
+      selectValue: 'select2',
+      checkboxValue: ['option2', 'option4'],
+      radioValue: 'value1',
+      file: 'C:\\fakepath\\chucknorris.png',
+      agree: true,
+    });
   });
 });

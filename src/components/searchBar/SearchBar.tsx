@@ -1,25 +1,31 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 
 function SearchBar() {
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchStr') || undefined);
+  const searchRef = useRef('');
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(event.target.value);
   };
 
   const handleSubmit = (event: FormEvent) => {
-    if (searchValue) {
-      localStorage.setItem('searchStr', searchValue);
-    }
+    // if (searchValue) {
+    //   localStorage.setItem('searchStr', searchValue);
+    // }
     event.preventDefault();
   };
 
-  // useEffect(() => {
-  //   const str = searchValue;
-  //   return () => {
-  //     localStorage.setItem('searchStr', str);
-  //   };
-  // }, [searchValue]);
+  useEffect(() => {
+    if (searchValue) {
+      searchRef.current = searchValue;
+    }
+  }, [searchValue]);
+
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchStr', searchRef.current);
+    };
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="relative flex w-full max-w-[24rem]">

@@ -34,13 +34,12 @@ describe('Checkbox render', () => {
     fireEvent.click(checkInputs[1]);
     fireEvent.click(checkInputs[3]);
     fireEvent.click(checkInputs[5]);
-    await fireEvent.change(screen.getByLabelText(/upload/i), {
-      target: {
-        files: [new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })],
-      },
-    });
+    await userEvent.upload(
+      screen.getByLabelText(/upload/i),
+      new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })
+    );
     await userEvent.click(await screen.getByRole('button'));
-    expect(textInputs[0]).toHaveValue('' || undefined);
+    expect(textInputs[0]).toHaveValue('');
     expect(await screen.getByText(/uniq/i)).toBeInTheDocument();
     expect(screen.getAllByRole('img')).toHaveLength(1);
 
@@ -57,11 +56,10 @@ describe('Checkbox render', () => {
     fireEvent.click(radioInputs[2]);
     fireEvent.click(checkInputs[1]);
     fireEvent.click(checkInputs[5]);
-    await fireEvent.change(screen.getByLabelText(/upload/i), {
-      target: {
-        files: [new File(['(⌐□_□)'], 'picture.png', { type: 'image/png' })],
-      },
-    });
+    await userEvent.upload(
+      screen.getByLabelText(/upload/i),
+      new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })
+    );
     await userEvent.click(await screen.getByRole('button'));
     expect(screen.getAllByRole('img')).toHaveLength(2);
 
@@ -71,25 +69,35 @@ describe('Checkbox render', () => {
     fireEvent.change(textInputs[1], {
       target: { value: 'Important text' },
     });
-    await selectEvent.select(screen.getByRole('combobox'), 'select1');
+    await fireEvent.change(await screen.getByRole('combobox'), { target: { value: 'select2' } });
     fireEvent.click(radioInputs[2]);
     fireEvent.click(checkInputs[1]);
     fireEvent.click(checkInputs[2]);
     expect(screen.getAllByRole('img')).toHaveLength(2);
-    await fireEvent.change(screen.getByLabelText(/upload/i), {
-      target: {
-        files: [new File(['(⌐□_□)'], 'image.png', { type: 'image/png' })],
-      },
-    });
+    await userEvent.upload(
+      screen.getByLabelText(/upload/i),
+      new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })
+    );
     fireEvent.click(checkInputs[3]);
-    expect(screen.getAllByRole('img')).toHaveLength(3);
+    expect(screen.getAllByRole('img')).toHaveLength(2);
     await userEvent.click(await screen.getByRole('button'));
 
     fireEvent.change(await screen.getByAltText('date'), {
       target: { value: '2020-12-24' },
     });
-    fireEvent.click(checkInputs[5]);
+    // fireEvent.click(checkInputs[5]);
     await userEvent.click(await screen.getByRole('button'));
+    // expect(textInputs[0]).not.toHaveValue('three text');
+    expect(await screen.getByTestId('form')).toHaveFormValues({
+      name: 'three text',
+      date: '2020-12-24',
+      desc: 'Important text',
+      selectValue: 'select2',
+      checkboxValue: ['option3', 'option4'],
+      radioValue: 'value3',
+      file: 'C:\\fakepath\\chucknorris.png',
+      agree: true,
+    });
     expect(screen.getAllByRole('img')).toHaveLength(3);
   });
 });

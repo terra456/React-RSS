@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { IFormValues } from 'types';
 import { afterEach } from 'vitest';
 import InputCheckBox, { Props } from '../inputCheckBox';
 
@@ -8,10 +10,19 @@ afterEach(() => {
   cleanup();
 });
 
+const register: UseFormRegister<IFormValues> = (name: string) => {
+  return {
+    name: name,
+    ref: React.createRef(),
+    onChange: () => {},
+    onBlur: () => {},
+  };
+};
+
 const mock: Props = {
   name: 'user',
   desc: 'user agree',
-  refLink: React.createRef(),
+  register: register,
 };
 
 describe('Checkbox render', () => {

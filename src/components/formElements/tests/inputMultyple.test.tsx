@@ -1,31 +1,30 @@
 import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { IFormValues } from 'types';
 import { afterEach } from 'vitest';
-import InputMultyple, { Props } from '../inputMultyple';
+import InputMultyple, { InputProps } from '../inputMultyple';
 
 afterEach(() => {
   cleanup();
 });
 
-const mock: Props = {
+const register: UseFormRegister<IFormValues> = (name: string) => {
+  return {
+    name: name,
+    ref: React.createRef(),
+    onChange: () => {},
+    onBlur: () => {},
+  };
+};
+
+const mock: InputProps = {
   type: 'checkbox',
   name: 'options',
   desc: 'some description for the block',
-  array: [
-    {
-      name: 'one',
-      refLink: React.createRef(),
-    },
-    {
-      name: 'two',
-      refLink: React.createRef(),
-    },
-    {
-      name: 'three',
-      refLink: React.createRef(),
-    },
-  ],
+  options: ['one', 'two', 'three'],
+  register: register,
 };
 
 describe('Checkbox render', () => {

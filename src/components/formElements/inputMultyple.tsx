@@ -2,7 +2,7 @@ import React from 'react';
 import { UseFormRegister } from 'react-hook-form';
 import { IFormValues } from 'types';
 
-type InputProps = {
+export type InputProps = {
   type: string;
   label?: string;
   name?: string;

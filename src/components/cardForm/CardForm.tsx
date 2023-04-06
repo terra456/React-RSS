@@ -19,7 +19,6 @@ function CardForm(props: Props) {
     watch,
     setValue,
     reset,
-    // Read the formState before render to subscribe the form state through the Proxy
     formState: { errors, isDirty, isValid },
   } = useForm();
 
@@ -172,6 +171,7 @@ function CardForm(props: Props) {
                     >
                       <span>Upload a file</span>
                       <input
+                        data-testid="file-upload"
                         id="file-upload"
                         {...register('file')}
                         onChange={handleFile}
