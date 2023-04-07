@@ -1,50 +1,63 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Character, CharacterFilter, getCharacter, getCharacters } from 'rickmortyapi';
 import Cards from '../components/cards/Cards';
 import Modal from '../components/modal/Modal';
+import Pagination from '../components/pagination/Pagination';
 import SearchBar from '../components/searchBar/SearchBar';
+import Spinner from '../components/spinner/Spinner';
 
 function MainPage() {
   const [data, setData]: [
-    Character[] | undefined[],
-    Dispatch<SetStateAction<Character[] | undefined[]>>
-  ] = useState(Array(20));
+    Character[] | undefined,
+    Dispatch<SetStateAction<Character[] | undefined>>
+  ] = useState();
 
   const [element, setElement]: [
     Character | undefined,
     Dispatch<SetStateAction<Character | undefined>>
-  ] = useState(undefined);
+  ] = useState();
 
-  // const [pages, setPages] = useState(0);
-  // const [count, setCount] = useState(0);
+  const [pages, setPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [count, setCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [searchStr, setSearchStr] = useState('');
 
   useEffect(() => {
-    (async () => {
-      const filters: CharacterFilter = {
-        name: searchStr.toLowerCase(),
-      };
-      const characters = await getCharacters(filters);
-      console.log(characters.data.results);
-      if (characters.data.results) {
-        setData(characters.data.results);
-      }
-      if (characters.data.info) {
-        // setPages(characters.data.info.pages);
-        // setCount(characters.data.info.count);
-      }
-    })();
+    setCurrentPage(1);
+    getCardData();
   }, [searchStr]);
+
+  useEffect(() => {
+    getCardData();
+  }, [currentPage]);
 
   useEffect(() => {
     setIsOpen(true);
   }, [element]);
 
+  async function getCardData() {
+    const filters: CharacterFilter = {};
+    if (searchStr) {
+      filters.name = searchStr.toLowerCase();
+    }
+    if (currentPage !== 0) {
+      filters.page = currentPage;
+    }
+    const characters = await getCharacters(filters);
+    console.log(characters.data.results);
+    if (characters.data.results) {
+      setData(characters.data.results);
+    }
+    if (characters.data.info) {
+      setPages(characters.data.info.pages);
+      setCount(characters.data.info.count);
+    }
+  }
+
   const handleCardClick = (el: number): void => {
-    console.log(el);
     getCharacter(el).then((data) => {
-      console.log(data);
       setElement(data.data);
     });
   };
@@ -58,11 +71,20 @@ function MainPage() {
     setSearchStr(str);
   };
 
+  const handlePage = (n: number) => {
+    setCurrentPage(n);
+  };
+
   return (
     <div className="bg-white">
       <SearchBar handleSearch={handleSearch} />
-      <Cards dataList={data} handleClick={handleCardClick} />
-      <Modal data={element} open={isOpen} handleClose={closeModal} />;
+      {data !== undefined ? <Cards dataList={data} handleClick={handleCardClick} /> : <Spinner />}
+      <Modal data={element} open={isOpen} handleClose={closeModal} />
+      {pages !== 0 ? (
+        <Pagination currentPage={currentPage} pages={pages} count={count} handlePage={handlePage} />
+      ) : (
+        <Spinner />
+      )}
     </div>
   );
 }
