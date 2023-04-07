@@ -3,7 +3,13 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { afterEach } from 'vitest';
-import SearchBar from './SearchBar';
+import SearchBar, { Props } from './SearchBar';
+
+const props: Props = {
+  handleSearch: (str) => {
+    str;
+  },
+};
 
 afterEach(() => {
   cleanup();
@@ -11,13 +17,13 @@ afterEach(() => {
 
 describe('Search Bar', () => {
   it('render input and button', async () => {
-    render(<SearchBar />);
+    render(<SearchBar {...props} />);
     expect(await screen.findByRole('textbox')).toBeEmpty();
     expect(await screen.findByRole('button')).toBeDisabled();
   });
 
   it('input focus', async () => {
-    render(<SearchBar />);
+    render(<SearchBar {...props} />);
     const input = await screen.getByRole('textbox');
     expect(input).not.toHaveFocus();
     input.focus();
@@ -25,7 +31,7 @@ describe('Search Bar', () => {
   });
 
   it('add text to input and enable button', async () => {
-    render(<SearchBar />);
+    render(<SearchBar {...props} />);
     const btn = await screen.getByRole('button');
     const input = await screen.getByRole('textbox');
     expect(btn).toBeDisabled();
@@ -37,7 +43,7 @@ describe('Search Bar', () => {
 
   it('submit value', async () => {
     const user = userEvent.setup();
-    render(<SearchBar />);
+    render(<SearchBar {...props} />);
     const btn = await screen.getByRole('button');
     const input = await screen.getByRole('textbox');
     expect(btn).toBeEnabled();
