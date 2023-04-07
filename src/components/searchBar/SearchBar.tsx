@@ -1,6 +1,10 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 
-function SearchBar() {
+export interface Props {
+  handleSearch: (str: string) => void;
+}
+
+function SearchBar({ handleSearch }: Props) {
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchStr') || undefined);
   const searchRef = useRef('');
 
@@ -9,9 +13,9 @@ function SearchBar() {
   };
 
   const handleSubmit = (event: FormEvent) => {
-    // if (searchValue) {
-    //   localStorage.setItem('searchStr', searchValue);
-    // }
+    if (searchValue) {
+      handleSearch(searchValue);
+    }
     event.preventDefault();
   };
 

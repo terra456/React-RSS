@@ -2,7 +2,7 @@ import React from 'react';
 import { Character } from 'rickmortyapi';
 
 function CardBlock(props: Character) {
-  const { id, location, name, url, created, status, species, type, gender, origin, image } = props;
+  const { id, location, name, species, gender, image } = props;
   return (
     <div
       id={id.toString()}
