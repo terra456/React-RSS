@@ -1,17 +1,16 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Character } from 'rickmortyapi';
 import { IFormValues } from 'types';
+import { newCardsSlice } from '../../store/reducers/NewCardsSlice';
 import InputCheckBox from '../formElements/inputCheckBox';
 import InputMultyple from '../formElements/inputMultyple';
 import InputString from '../formElements/inputString';
 import SelectOptions from '../formElements/selectOptions';
 import './components.css';
 
-export interface Props {
-  onFormSubmit: (obj: IFormValues) => void;
-}
-
-function CardForm(props: Props) {
+function CardForm() {
   const {
     register,
     handleSubmit,
@@ -22,11 +21,14 @@ function CardForm(props: Props) {
     formState: { errors, isDirty, isValid },
   } = useForm();
 
+  const { addCard } = newCardsSlice.actions;
+  const dispatch = useDispatch();
+
   const watchFile = watch('fileSrc');
 
   const selectsArr: string[] = ['select1', 'select2', 'select3', 'select4', 'select5', 'select6'];
   const checkboxesArr: string[] = ['option1', 'option2', 'option3', 'option4', 'option5'];
-  const radiosArr: string[] = ['value1', 'value2', 'value3'];
+  const radiosArr: string[] = ['Dead', 'Alive', 'unknown'];
 
   const validateForm = (data: IFormValues) => {
     const { name, date, desc, selectValue, checkboxValue, radioValue, file, agree } = data;
@@ -64,22 +66,40 @@ function CardForm(props: Props) {
       setError('file', { type: 'custom', message: 'add any picture' });
     }
     if (isValid) {
-      addCard(data);
+      onFormSubmit(data);
     }
+  };
+
+  const onFormSubmit = (obj: IFormValues) => {
+    const newCard: Character = {
+      id: 1,
+      name: obj.name,
+      url: obj.desc,
+      created: obj.date,
+      status: obj.radioValue,
+      species: obj.selectValue,
+      type: 'type',
+      gender: 'Female',
+      image: watchFile || './localhost/5',
+      episode: obj.checkboxValue,
+      origin: {
+        name: 'string',
+        url: 'string',
+      },
+      location: {
+        name: 'string',
+        url: 'string',
+      },
+    };
+    dispatch(addCard(newCard));
+    resetForm();
   };
 
   const resetForm = () => {
     reset();
   };
 
-  const addCard = (data: IFormValues) => {
-    data.fileSrc = watchFile;
-    props.onFormSubmit(data);
-    resetForm();
-  };
-
   const onSubmit = (data: IFormValues) => {
-    console.log(data);
     validateForm(data);
   };
 

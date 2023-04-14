@@ -75,7 +75,7 @@ describe('Checkbox render', () => {
       desc: 'Some Description',
       selectValue: 'select2',
       checkboxValue: ['option2', 'option4'],
-      radioValue: 'value1',
+      radioValue: 'Dead',
       file: 'C:\\fakepath\\chucknorris.png',
       agree: true,
     });

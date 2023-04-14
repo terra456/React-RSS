@@ -18,7 +18,7 @@ export interface IFormValues {
   desc: string;
   selectValue: string;
   checkboxValue: string[];
-  radioValue: string;
+  radioValue: 'Dead' | 'Alive' | 'unknown';
   file: Blob[];
   fileSrc?: string;
   agree: boolean;

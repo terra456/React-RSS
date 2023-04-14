@@ -10,7 +10,7 @@ afterEach(() => {
   cleanup();
 });
 
-describe('Checkbox render', () => {
+describe('Creating cards', () => {
   it('send several cards', async () => {
     window.URL.createObjectURL = (file: Blob) => {
       file;
@@ -85,16 +85,16 @@ describe('Checkbox render', () => {
     fireEvent.change(await screen.getByAltText('date'), {
       target: { value: '2020-12-24' },
     });
-    // fireEvent.click(checkInputs[5]);
+    fireEvent.click(checkInputs[5]);
     await userEvent.click(await screen.getByRole('button'));
-    // expect(textInputs[0]).not.toHaveValue('three text');
+    expect(textInputs[0]).not.toHaveValue('three text');
     expect(await screen.getByTestId('form')).toHaveFormValues({
       name: 'three text',
       date: '2020-12-24',
       desc: 'Important text',
       selectValue: 'select2',
       checkboxValue: ['option3', 'option4'],
-      radioValue: 'value3',
+      radioValue: 'unknown',
       file: 'C:\\fakepath\\chucknorris.png',
       agree: true,
     });

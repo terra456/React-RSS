@@ -23,7 +23,9 @@
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
     "@material-tailwind/react": "^1.4.2",
+    "@reduxjs/toolkit": "^1.9.3",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@types/react-redux": "^7.1.25",
     "@typescript-eslint/parser": "^5.55.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-import-resolver-typescript": "^3.5.3",
@@ -33,6 +35,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "rickmortyapi": "^2.3.0"
   },
