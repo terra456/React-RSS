@@ -4,8 +4,6 @@ import Cards from '../components/cards/Cards';
 import { useAppSelector } from '../hooks/redux';
 
 function AddCard() {
-  // const [dataList, setDataList] = useState(null);
-
   const { cards } = useAppSelector((state) => state.NewCardsReducer);
 
   return (

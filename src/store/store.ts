@@ -1,13 +1,18 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { rickAndMortyApi } from '../services/fetchAPI';
 import NewCardsReducer from './reducers/NewCardsSlice';
 
 const rootReducer = combineReducers({
   NewCardsReducer,
+  [rickAndMortyApi.reducerPath]: rickAndMortyApi.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => {
+      return getDefaultMiddleware().concat(rickAndMortyApi.middleware);
+    },
   });
 };
 
