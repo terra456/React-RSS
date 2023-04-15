@@ -2,11 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'reac
 import { useDispatch } from 'react-redux';
 import { filterSlice } from '../../store/reducers/FilterSlice';
 
-export interface Props {
-  handleSearch: (str: string) => void;
-}
-
-function SearchBar({ handleSearch }: Props) {
+function SearchBar() {
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchStr') || undefined);
   const searchRef = useRef('');
   const { setSearch } = filterSlice.actions;

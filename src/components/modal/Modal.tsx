@@ -2,16 +2,18 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Character, getEpisode } from 'rickmortyapi';
+import { getEpisode } from 'rickmortyapi';
+import { rickAndMortyApi } from '../../services/fetchAPI';
 import Spinner from '../spinner/Spinner';
 
 export interface Props {
-  data?: Character;
+  el: number;
   open: boolean;
   handleClose: () => void;
 }
 
-function Modal({ data, open, handleClose }: Props) {
+function Modal({ el, open, handleClose }: Props) {
+  const { data, error, isLoading } = rickAndMortyApi.useGetCharacterByIdQuery(el);
   const [episodesArr, setEpisodesArr] = useState(['']);
 
   useEffect(() => {
