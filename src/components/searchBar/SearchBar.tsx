@@ -1,4 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { filterSlice } from '../../store/reducers/FilterSlice';
 
 export interface Props {
   handleSearch: (str: string) => void;
@@ -7,6 +9,8 @@ export interface Props {
 function SearchBar({ handleSearch }: Props) {
   const [searchValue, setSearchValue] = useState(localStorage.getItem('searchStr') || undefined);
   const searchRef = useRef('');
+  const { setSearch } = filterSlice.actions;
+  const dispatch = useDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(event.target.value);
@@ -14,7 +18,7 @@ function SearchBar({ handleSearch }: Props) {
 
   const handleSubmit = (event: FormEvent) => {
     if (searchValue) {
-      handleSearch(searchValue);
+      dispatch(setSearch(searchValue));
     }
     event.preventDefault();
   };

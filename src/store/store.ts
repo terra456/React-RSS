@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { rickAndMortyApi } from '../services/fetchAPI';
+import FilterReducer from './reducers/FilterSlice';
 import NewCardsReducer from './reducers/NewCardsSlice';
 
 const rootReducer = combineReducers({
   NewCardsReducer,
+  FilterReducer,
   [rickAndMortyApi.reducerPath]: rickAndMortyApi.reducer,
 });
 

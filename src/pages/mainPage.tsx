@@ -1,14 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Character, getCharacter } from 'rickmortyapi';
 import Cards from '../components/cards/Cards';
 import Pagination from '../components/pagination/Pagination';
 import SearchBar from '../components/searchBar/SearchBar';
 import Spinner from '../components/spinner/Spinner';
+import { useAppSelector } from '../hooks/redux';
 import { rickAndMortyApi } from '../services/fetchAPI';
+import { filterSlice } from '../store/reducers/FilterSlice';
 
 function MainPage() {
-  const { data, error, isLoading } = rickAndMortyApi.useGetAllCharactersQuery(1);
+  const { setPage } = filterSlice.actions;
+  const dispatch = useDispatch();
+  const { currentPage, searchStr } = useAppSelector((state) => state.FilterReducer);
+  const { data, error, isLoading } = rickAndMortyApi.useGetCharactersBySearchQuery({
+    page: currentPage,
+    name: searchStr,
+  });
 
   // const [data, setData]: [
   //   Character[] | undefined,
@@ -20,11 +29,10 @@ function MainPage() {
     Dispatch<SetStateAction<Character | undefined>>
   ] = useState();
 
-  const [pages, setPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [count, setCount] = useState(0);
+  // const [pages, setPages] = useState(0);
+  // const [count, setCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [searchStr, setSearchStr] = useState('');
+  // const [searchStr, setSearchStr] = useState('');
 
   // useEffect(() => {
   //   setCurrentPage(1);
@@ -71,11 +79,11 @@ function MainPage() {
 
   const handleSearch = (str: string) => {
     console.log(str);
-    setSearchStr(str);
+    // setSearchStr(str);
   };
 
   const handlePage = (n: number) => {
-    setCurrentPage(n);
+    dispatch(setPage(n));
   };
 
   return (
@@ -85,8 +93,13 @@ function MainPage() {
       {error && <p>Error to load info</p>}
       {data && data.results && <Cards dataList={data.results} handleClick={handleCardClick} />}
       {/* <Modal data={element} open={isOpen} handleClose={closeModal} /> */}
-      {pages !== 0 && (
-        <Pagination currentPage={currentPage} pages={pages} count={count} handlePage={handlePage} />
+      {data && data.info?.pages !== 0 && (
+        <Pagination
+          currentPage={currentPage}
+          pages={data.info?.pages || 1}
+          count={data.info?.count || 1}
+          handlePage={handlePage}
+        />
       )}
     </div>
   );
