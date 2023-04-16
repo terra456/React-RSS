@@ -28,4 +28,6 @@ export const filterSlice = createSlice({
   },
 });
 
+export const { setSearch, setPage, clearSearch } = filterSlice.actions;
+
 export default filterSlice.reducer;

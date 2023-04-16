@@ -14,7 +14,6 @@ export const newCardsSlice = createSlice({
   initialState,
   reducers: {
     addCard(state, action: PayloadAction<Character>) {
-      console.log('action.payload');
       state.cards = [...state.cards, action.payload];
     },
   },

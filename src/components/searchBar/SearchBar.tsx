@@ -32,14 +32,20 @@ function SearchBar() {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex w-full max-w-[24rem]">
+    <form
+      data-testid="search-form"
+      onSubmit={handleSubmit}
+      className="relative flex w-full max-w-[24rem]"
+    >
       <input
+        data-testid="search-input"
         type="text"
         value={searchValue}
         onChange={handleChange}
         className="block h-7 w-full rounded-md rounded-tr-none rounded-br-none border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-200 sm:text-sm sm:leading-6"
       />
       <button
+        data-testid="search-btn"
         type="submit"
         name="search"
         disabled={!searchValue}
