@@ -25,7 +25,8 @@ function InputMultyple({ type, name, desc, options, register, errMessage }: Inpu
             <div key={el + i} className="flex h-6 items-center text-sm leading-6">
               <input
                 {...register(name)}
-                id={id}
+                data-testid={name}
+                id={name}
                 type={type}
                 value={el}
                 className={
@@ -33,7 +34,7 @@ function InputMultyple({ type, name, desc, options, register, errMessage }: Inpu
                   'h-4 w-4 border-solid border-gray-500 text-indigo-600 focus:ring-indigo-600'
                 }
               />
-              <label htmlFor={id} className="ml-3 font-medium text-gray-900">
+              <label htmlFor={name} className="ml-3 font-medium text-gray-900">
                 {el}
               </label>
             </div>

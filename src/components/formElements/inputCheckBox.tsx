@@ -17,6 +17,7 @@ function InputCheckBox({ name, desc, register, error }: Props) {
       <div className="flex h-6 items-center text-sm leading-6">
         <input
           id={id}
+          data-testid={name}
           {...register(name)}
           name={name}
           type="checkbox"

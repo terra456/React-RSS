@@ -17,6 +17,11 @@ export const rickAndMortyApi = createApi({
         },
       }),
     }),
+    getAllEpisodes: builder.query<Character[], number[]>({
+      query: (arr) => ({
+        url: `episode/${arr}`,
+      }),
+    }),
     getCharactersBySearch: builder.query<Info<Character[]>, CharacterFilter>({
       query: ({ name, page = 1 }) => ({
         url: `character/`,

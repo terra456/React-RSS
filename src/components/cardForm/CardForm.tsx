@@ -1,8 +1,9 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, UseFormReturn } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Character } from 'rickmortyapi';
 import { IFormValues } from 'types';
+import { rickAndMortyApi } from '../../services/fetchAPI';
 import { newCardsSlice } from '../../store/reducers/NewCardsSlice';
 import InputCheckBox from '../formElements/inputCheckBox';
 import InputMultyple from '../formElements/inputMultyple';
@@ -19,19 +20,45 @@ function CardForm() {
     setValue,
     reset,
     formState: { errors, isDirty, isValid },
-  } = useForm();
+  }: UseFormReturn<IFormValues> = useForm();
 
   const { addCard } = newCardsSlice.actions;
   const dispatch = useDispatch();
 
   const watchFile = watch('fileSrc');
 
-  const selectsArr: string[] = ['select1', 'select2', 'select3', 'select4', 'select5', 'select6'];
-  const checkboxesArr: string[] = ['option1', 'option2', 'option3', 'option4', 'option5'];
-  const radiosArr: string[] = ['Dead', 'Alive', 'unknown'];
+  const species: string[] = [
+    'Human',
+    'Alien',
+    'Humanoid',
+    'unknown',
+    'Poopybutthole',
+    'Mythological Creature',
+    'Animal',
+    'Robot',
+    'Cronenberg',
+    'Disease',
+  ];
+  const checkboxesArr: number[] = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+  ];
+  const { data, isLoading, error } = rickAndMortyApi.useGetAllEpisodesQuery(checkboxesArr);
+  const [episodes, setEpisodes] = useState(['']);
+
+  useEffect(() => {
+    if (data) {
+      const res = data.map((el) => `${el.id}: ${el.name}`);
+      console.log(data);
+      setEpisodes(res);
+    }
+  }, [data]);
+
+  const radiosStetus: string[] = ['Dead', 'Alive', 'unknown'];
+  const radiosGender: string[] = ['Female', 'Male', 'Genderless', 'unknown'];
 
   const validateForm = (data: IFormValues) => {
-    const { name, date, desc, selectValue, checkboxValue, radioValue, file, agree } = data;
+    const { name, date, desc, selectValue, checkboxValue, status, gender, file, agree } = data;
     let isValid = true;
     if (name === '') {
       isValid = false;
@@ -53,9 +80,13 @@ function CardForm() {
       isValid = false;
       setError('checkboxValue', { type: 'custom', message: 'you must select one or more value' });
     }
-    if (radioValue === '' || radioValue === undefined || radioValue === null) {
+    if (!status) {
       isValid = false;
-      setError('radioValue', { type: 'custom', message: 'you must select any value' });
+      setError('status', { type: 'custom', message: 'you must select any value' });
+    }
+    if (!gender) {
+      isValid = false;
+      setError('gender', { type: 'custom', message: 'you must select any value' });
     }
     if (!agree) {
       isValid = false;
@@ -76,10 +107,10 @@ function CardForm() {
       name: obj.name,
       url: obj.desc,
       created: obj.date,
-      status: obj.radioValue,
+      status: obj.status,
       species: obj.selectValue,
-      type: 'type',
-      gender: 'Female',
+      type: '',
+      gender: obj.gender,
       image: watchFile || './localhost/5',
       episode: obj.checkboxValue,
       origin: {
@@ -140,7 +171,7 @@ function CardForm() {
                 label="Select some option"
                 name="selectValue"
                 register={register}
-                options={selectsArr}
+                options={species}
                 errMessage={errors.selectValue?.message}
               />
             </div>
@@ -154,15 +185,23 @@ function CardForm() {
                 name="checkboxValue"
                 register={register}
                 errMessage={errors.checkboxValue?.message}
-                options={checkboxesArr}
+                options={episodes}
               />
               <InputMultyple
                 type={'radio'}
-                desc="Legend for radiobuttons"
-                name="radioValue"
+                desc="Select a gender"
+                name="gender"
                 register={register}
-                errMessage={errors.radioValue?.message}
-                options={radiosArr}
+                errMessage={errors.gender?.message}
+                options={radiosGender}
+              />
+              <InputMultyple
+                type={'radio'}
+                desc="Check a status"
+                name="status"
+                register={register}
+                errMessage={errors.status?.message}
+                options={radiosStetus}
               />
               <fieldset>
                 <div>

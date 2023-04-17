@@ -18,7 +18,8 @@ export interface IFormValues {
   desc: string;
   selectValue: string;
   checkboxValue: string[];
-  radioValue: 'Dead' | 'Alive' | 'unknown';
+  statusValue: 'Dead' | 'Alive' | 'unknown';
+  genderValue: 'Female' | 'Male' | 'Genderless' | 'unknown';
   file: Blob[];
   fileSrc?: string;
   agree: boolean;
