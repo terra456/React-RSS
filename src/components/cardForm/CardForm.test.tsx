@@ -3,7 +3,6 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { IFormValues } from 'types';
 import { afterEach } from 'vitest';
 import { setupStore } from '../../store/store';
 import CardForm from './CardForm';
@@ -11,14 +10,6 @@ import CardForm from './CardForm';
 afterEach(() => {
   cleanup();
 });
-
-const handleCardSubmit = (obj: IFormValues) => {
-  render(
-    <div>
-      <p>{(obj.date, obj.file, obj.selectValue, obj.name)}</p>
-    </div>
-  );
-};
 
 describe('Checkbox render', () => {
   it('render checkbox input and label with mock values', async () => {

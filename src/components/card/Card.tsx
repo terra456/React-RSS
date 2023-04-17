@@ -5,6 +5,7 @@ function CardBlock(props: Character) {
   const { id, location, name, species, gender, image } = props;
   return (
     <div
+      data-testid="card"
       id={id.toString()}
       className="min-h-90 h-90 lg:min-h-90 aspect-h-1 aspect-none w-full max-w-[26rem] flex-col overflow-hidden rounded-md bg-gray-200 shadow-lg group-hover:opacity-75 sm:h-full "
     >
