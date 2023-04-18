@@ -20,7 +20,6 @@ function InputMultyple({ type, name, desc, options, register, errMessage }: Inpu
       <p className="ml-8 mt-0 text-xs text-red-500">{errMessage}</p>
       <div className="mt-4">
         {options.map((el, i) => {
-          const id = el.trim().split(' ')[0].toLowerCase();
           return (
             <div key={el + i} className="flex h-6 items-center text-sm leading-6">
               <input

@@ -43,13 +43,12 @@ function CardForm() {
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
     27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
   ];
-  const { data, isLoading, error } = rickAndMortyApi.useGetAllEpisodesQuery(checkboxesArr);
+  const { data } = rickAndMortyApi.useGetAllEpisodesQuery(checkboxesArr);
   const [episodes, setEpisodes] = useState(['']);
 
   useEffect(() => {
     if (data) {
       const res = data.map((el) => `${el.id}: ${el.name}`);
-      console.log(data);
       setEpisodes(res);
     }
   }, [data]);
@@ -135,7 +134,6 @@ function CardForm() {
   };
 
   const handleFile = (e) => {
-    console.log(e.target.files[0]);
     if (e.target.files[0].type.startsWith('image')) {
       setValue('fileSrc', window.URL.createObjectURL(e.target.files[0]));
     } else {

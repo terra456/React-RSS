@@ -13,7 +13,7 @@ export interface Props {
 }
 
 function Modal({ el, open, handleClose }: Props) {
-  const { data, error, isLoading } = rickAndMortyApi.useGetCharacterByIdQuery(el);
+  const { data } = rickAndMortyApi.useGetCharacterByIdQuery(el);
   const [episodesArr, setEpisodesArr] = useState(['']);
 
   useEffect(() => {
