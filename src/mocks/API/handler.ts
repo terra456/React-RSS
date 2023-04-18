@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 
 export const handlers = [
-  rest.get('https://rickandmortyapi.com/api', (req, res, ctx) => {
+  rest.get('https://rickandmortyapi.com/api', (_req, res, ctx) => {
     // successful response
     return res(
       ctx.status(200),

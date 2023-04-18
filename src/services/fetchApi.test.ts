@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+// import { rest } from 'msw';
 import { server } from '../mocks/API/server';
 import { setupStore } from '../store/store';
 import { rickAndMortyApi } from './fetchAPI';
