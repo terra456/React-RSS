@@ -1,0 +1,9 @@
+{
+  "watch": ["."],
+  "ext": ".ts",
+  "ignore": ["**/test/**", "**/docs/**", ".git", "node_modules", "dist"],
+  "execMap": {
+    "ts": "ts-node"
+  },
+  "exec": "ts-node --esm ./server.ts"
+}

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { filterSlice } from '../../store/reducers/FilterSlice';
 
 function SearchBar() {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchStr') || undefined);
+  const [searchValue, setSearchValue] = useState('');
   const searchRef = useRef('');
   const { setSearch } = filterSlice.actions;
   const dispatch = useDispatch();
@@ -24,12 +24,6 @@ function SearchBar() {
       searchRef.current = searchValue;
     }
   }, [searchValue]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchStr', searchRef.current);
-    };
-  }, []);
 
   return (
     <form
