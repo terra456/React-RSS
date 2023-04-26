@@ -3,16 +3,19 @@ import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 
 function Header() {
+  const a = ROUTES;
+  const [{ children }] = [...ROUTES];
   return (
     <header className="mx-auto flex max-w-2xl flex-wrap justify-between space-x-4 py-5 px-4 sm:py-4 sm:px-6 lg:max-w-7xl lg:px-8 lg:py-8">
       <nav>
         <ul className="flex space-x-4">
-          {ROUTES.map(({ key, path, name }, i) => {
-            if (path === '*') {
+          {children?.map(({ path }, i) => {
+            if (!path || path === '*') {
               return;
             }
+            const str = path.replace('-', ' ');
             return (
-              <li key={i + key}>
+              <li key={i + path}>
                 <NavLink
                   to={path}
                   className={({ isActive }) => {
@@ -21,7 +24,7 @@ function Header() {
                     }`;
                   }}
                 >
-                  {name}
+                  {str}
                 </NavLink>
               </li>
             );

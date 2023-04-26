@@ -4,7 +4,10 @@ import { Character, CharacterFilter, Info } from 'rickmortyapi';
 // Define a service using a base URL and expected endpoints
 export const rickAndMortyApi = createApi({
   reducerPath: 'rickAndMortyApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://rickandmortyapi.com/api/',
+    fetchFn: (input: RequestInfo) => fetch(input),
+  }),
   endpoints: (builder) => ({
     getCharacterById: builder.query<Character, number>({
       query: (id) => `character/${id}`,

@@ -1,23 +1,22 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import Layout from './pages/Layout';
+// import { Outlet, Route, Routes } from 'react-router-dom';
+
 import './App.css';
-import Header from './components/header/Header';
-import { ROUTES } from './routes';
 
 function App() {
   return (
-    <>
-      <Header />
-      <main>
-        {/* <Outlet /> */}
-        <Routes>
-          {ROUTES.map((route) => (
-            // eslint-disable-next-line react/jsx-key
-            <Route {...route} />
-          ))}
-        </Routes>
-      </main>
-    </>
+    <html>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/styles.css"></link>
+        <title>My app</title>
+      </head>
+      <body>
+        <Layout />
+      </body>
+    </html>
   );
 }
 

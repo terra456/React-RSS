@@ -1,17 +1,18 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom/server';
-import App from './App';
+
+import Layout from './pages/Layout';
 import { setupStore } from './store/store';
 
-export function render(url, context) {
+export function render(url: string) {
   const store = setupStore();
   console.log(url);
-  return ReactDOMServer.renderToString(
+  return renderToString(
     <Provider store={store}>
-      <StaticRouter location={url} context={context}>
-        {App()}
+      <StaticRouter location={url}>
+        <Layout />
       </StaticRouter>
     </Provider>
   );

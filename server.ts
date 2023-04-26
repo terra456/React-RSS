@@ -1,5 +1,7 @@
+import * as fs from 'fs';
+
 import express from 'express';
-import fs from 'fs';
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
@@ -31,10 +33,11 @@ async function createServer() {
       const html = template.replace(`<!--ssr-outlet-->`, appHtml);
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      vite.ssrFixStacktrace(e);
-      next(e);
+    } catch (e) {
+      if (e instanceof Error) {
+        vite.ssrFixStacktrace(e);
+        next(e);
+      }
     }
   });
 
