@@ -19,6 +19,9 @@ async function createServer() {
   app.use(vite.middlewares);
 
   app.use('*', async (req, res, next) => {
+    if (req.originalUrl === '/') {
+      res.redirect('./home');
+    }
     const url = req.originalUrl;
 
     try {
