@@ -6,13 +6,15 @@
     "prettier",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
-    "plugin:css/recommended"
+    "plugin:css/recommended",
+    "plugin:cypress/recommended"
   ],
   "env": {
     "browser": true,
     "es6": true,
     "jest": true,
-    "node": true
+    "node": true,
+    "cypress/globals": true
   },
   "root": true,
   "parserOptions": {
@@ -22,7 +24,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks", "html", "css"],
+  "plugins": ["@typescript-eslint", "react", "prettier", "react-hooks", "html", "css", "cypress"],
   "ignorePatterns": [
     ".prettierrc.json",
     "**/vendor/*.js",
