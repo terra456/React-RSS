@@ -19,4 +19,15 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:5173',
   },
+  component: {
+    devServer: {
+      framework: 'react',
+      bundler: 'vite',
+    },
+    setupNodeEvents(on, config) {
+      coverage(on, config);
+
+      return config;
+    },
+  },
 });

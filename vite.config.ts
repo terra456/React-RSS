@@ -11,6 +11,10 @@ export default defineConfig({
       requireEnv: false,
     }),
   ],
+  server: {
+    host: true,
+    port: 3000,
+  },
   test: {
     globals: true,
     environment: 'jsdom',
