@@ -6,7 +6,7 @@ context('Basic tests', () => {
     cy.get('input[data-testid="search-input"]').should('have.value', '');
   });
 
-  it('visit page about us', () => {
+  it('transfer to page about us', () => {
     cy.visit('/home');
     cy.get('a[href="/about-us"]').click();
     cy.get('a[href="/about-us"]').should('have.attr', 'aria-current');

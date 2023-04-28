@@ -6,7 +6,7 @@ import { filterSlice } from '../../store/reducers/FilterSlice';
 function SearchBar() {
   const [searchValue, setSearchValue] = useState('');
   const { searchStr } = useAppSelector((state) => state.FilterReducer);
-  const { setSearch } = filterSlice.actions;
+  const { setSearch, clearSearch } = filterSlice.actions;
   const dispatch = useDispatch();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -32,7 +32,7 @@ function SearchBar() {
 
   useEffect(() => {
     if (!searchValue) {
-      dispatch(setSearch(''));
+      dispatch(clearSearch());
     }
   }, [searchValue]);
 

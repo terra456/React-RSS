@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 
 function Header() {
-  const a = ROUTES;
   const [{ children }] = [...ROUTES];
   return (
     <header className="mx-auto flex max-w-2xl flex-wrap justify-between space-x-4 py-5 px-4 sm:py-4 sm:px-6 lg:max-w-7xl lg:px-8 lg:py-8">
