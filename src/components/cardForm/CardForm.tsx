@@ -57,7 +57,7 @@ function CardForm() {
   const radiosGender: string[] = ['Female', 'Male', 'Genderless', 'unknown'];
 
   const validateForm = (data: IFormValues) => {
-    const { name, date, desc, selectValue, checkboxValue, status, gender, file, agree } = data;
+    const { name, date, desc, selectValue, checkboxValue, status, gender, agree } = data;
     let isValid = true;
     if (name === '') {
       isValid = false;
@@ -91,10 +91,10 @@ function CardForm() {
       isValid = false;
       setError('agree', { type: 'custom', message: 'You must agree the terms' });
     }
-    if (!file[0]) {
-      isValid = false;
-      setError('file', { type: 'custom', message: 'add any picture' });
-    }
+    // if (!file[0]) {
+    //   isValid = false;
+    //   setError('file', { type: 'custom', message: 'add any picture' });
+    // }
     if (isValid) {
       onFormSubmit(data);
     }
@@ -251,6 +251,7 @@ function CardForm() {
           </div>
           <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
             <button
+              data-testid="submit-form"
               disabled={!isDirty || !isValid}
               type="submit"
               className="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:bg-gray-500 disabled:hover:bg-gray-500"
