@@ -81,11 +81,11 @@ function CardForm() {
     }
     if (!status) {
       isValid = false;
-      setError('status', { type: 'custom', message: 'you must select any value' });
+      setError('status', { type: 'custom', message: 'you must select any status' });
     }
     if (!gender) {
       isValid = false;
-      setError('gender', { type: 'custom', message: 'you must select any value' });
+      setError('gender', { type: 'custom', message: 'you must select a gender' });
     }
     if (!agree) {
       isValid = false;

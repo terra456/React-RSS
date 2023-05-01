@@ -15,7 +15,8 @@
     "coverage": "vitest run --coverage",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:e2e": "start-server-and-test dev http-get://localhost:5173 cy:open"
+    "cy:e2e": "start-server-and-test dev http-get://localhost:5173 cy:open",
+    "test:e2e": "start-server-and-test dev http-get://localhost:5173 cy:run --browser chrome && npx nyc report --reporter=text-summary"
   },
   "lint-staged": {
     "**/*": [
