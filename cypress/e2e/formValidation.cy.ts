@@ -31,14 +31,14 @@ context('Form validation', () => {
       cy.get(':nth-child(14) > input[data-testid="checkboxValue"]').click();
       cy.get(':nth-child(3) > [data-testid="gender"]').click();
       cy.get(':nth-child(1) > input[data-testid="status"]').click();
-      cy.get('input[data-testid="file-upload"]').selectFile('cypress/downloads/1.tar.gz', {
+      cy.get('input[data-testid="file-upload"]').selectFile('cypress/e2e/downloads/1.tar.gz', {
         force: true,
       });
       cy.get('input[data-testid="agree"]').click();
       cy.get('[data-testid="submit-form"]').click();
       cy.get('[data-testid="card"]').should('not.exist');
       cy.get('.text-red-500').should('include.text', 'you must add an image');
-      cy.get('input[data-testid="file-upload"]').selectFile('cypress/downloads/5.jpg', {
+      cy.get('input[data-testid="file-upload"]').selectFile('cypress/e2e/downloads/5.jpg', {
         force: true,
       });
       cy.get('[data-testid="submit-form"]').click();

@@ -23,7 +23,7 @@ context('Fill form to add card', () => {
     cy.get(':nth-child(14) > input[data-testid="checkboxValue"]').click();
     cy.get(':nth-child(3) > [data-testid="gender"]').click();
     cy.get(':nth-child(1) > input[data-testid="status"]').click();
-    cy.get('input[data-testid="file-upload"]').selectFile('cypress/downloads/1.jpg', {
+    cy.get('input[data-testid="file-upload"]').selectFile('cypress/e2e/downloads/1.jpg', {
       force: true,
     });
     cy.get('input[data-testid="agree"]').click();
@@ -40,7 +40,7 @@ context('Fill form to add card', () => {
     cy.get(':nth-child(12) > input[data-testid="checkboxValue"]').click();
     cy.get(':nth-child(1) > [data-testid="gender"]').click();
     cy.get(':nth-child(2) > input[data-testid="status"]').click();
-    cy.get('input[data-testid="file-upload"]').selectFile('cypress/downloads/2.jpg', {
+    cy.get('input[data-testid="file-upload"]').selectFile('cypress/e2e/downloads/2.jpg', {
       force: true,
     });
     cy.get('input[data-testid="agree"]').click();
@@ -55,7 +55,7 @@ context('Fill form to add card', () => {
     cy.get(':nth-child(32) > input[data-testid="checkboxValue"]').click();
     cy.get(':nth-child(2) > [data-testid="gender"]').click();
     cy.get(':nth-child(2) > input[data-testid="status"]').click();
-    cy.get('input[data-testid="file-upload"]').selectFile('cypress/downloads/3.jpg', {
+    cy.get('input[data-testid="file-upload"]').selectFile('cypress/e2e/downloads/3.jpg', {
       force: true,
     });
     cy.get('input[data-testid="agree"]').click();
@@ -68,7 +68,7 @@ context('Fill form to add card', () => {
     cy.get(':nth-child(8) > input[data-testid="checkboxValue"]').click();
     cy.get(':nth-child(1) > [data-testid="gender"]').click();
     cy.get(':nth-child(2) > input[data-testid="status"]').click();
-    cy.get('input[data-testid="file-upload"]').selectFile('cypress/downloads/4.jpg', {
+    cy.get('input[data-testid="file-upload"]').selectFile('cypress/e2e/downloads/4.jpg', {
       force: true,
     });
     cy.get('input[data-testid="agree"]').click();
