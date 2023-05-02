@@ -133,9 +133,9 @@ function CardForm() {
     validateForm(data);
   };
 
-  const handleFile = (e) => {
-    if (e.target.files[0].type.startsWith('image')) {
-      setValue('fileSrc', window.URL.createObjectURL(e.target.files[0]));
+  const handleFile = (e: React.FormEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files && e.currentTarget.files[0].type.startsWith('image')) {
+      setValue('fileSrc', window.URL.createObjectURL(e.currentTarget.files[0]));
     } else {
       setError('file', { type: 'custom', message: 'you must add an image' });
     }
