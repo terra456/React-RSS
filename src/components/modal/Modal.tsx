@@ -1,7 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
-
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import React, { Fragment, useEffect, useState } from 'react';
 import { getEpisode } from 'rickmortyapi';
 import { rickAndMortyApi } from '../../services/fetchAPI';
 import Spinner from '../spinner/Spinner';
@@ -26,8 +25,6 @@ function Modal({ el, open, handleClose }: Props) {
         let res: string[] = [];
         if (Array.isArray(data)) {
           res = data.map((result) => `${result.id}: ${result.name}`);
-        } else {
-          res.push(`${data.id}: ${data.name}`);
         }
         setEpisodesArr(res);
       });
