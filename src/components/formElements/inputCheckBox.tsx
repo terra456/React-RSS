@@ -3,7 +3,7 @@ import { UseFormRegister } from 'react-hook-form';
 import { IFormValues } from 'types';
 
 export interface Props {
-  name: string;
+  name: keyof IFormValues;
   desc?: string;
   error?: string;
   register: UseFormRegister<IFormValues>;

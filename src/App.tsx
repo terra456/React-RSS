@@ -1,17 +1,10 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import './App.css';
-import Header from './components/header/Header';
+import { useRoutes } from 'react-router-dom';
+import { ROUTES } from './routes';
 
 function App() {
-  return (
-    <>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-    </>
-  );
+  const element = useRoutes(ROUTES);
+
+  return element;
 }
 
 export default App;

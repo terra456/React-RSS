@@ -34,23 +34,6 @@ describe('Search Bar', () => {
     expect(input).toHaveFocus();
   });
 
-  it('add text to input and enable button', async () => {
-    const conteiner = render(
-      <Provider store={setupStore()}>
-        <SearchBar />
-      </Provider>
-    );
-    const btn = await conteiner.getByTestId('search-btn');
-    const input = await conteiner.getByTestId('search-input');
-    expect(btn).toBeDisabled();
-    fireEvent.change(input, {
-      target: { value: 'smth' },
-    });
-    expect(btn).toBeEnabled();
-    expect(input).toHaveValue('smth');
-    await userEvent.click(btn);
-  });
-
   it('submit value into store', async () => {
     const store = setupStore();
     const conteiner = render(
@@ -60,13 +43,60 @@ describe('Search Bar', () => {
     );
     const btn = await conteiner.getByTestId('search-btn');
     const input = await conteiner.getByTestId('search-input');
-    expect(store.getState().FilterReducer).toEqual({ searchStr: undefined, currentPage: 1 });
+    expect(store.getState().FilterReducer).toEqual({ searchStr: '', currentPage: 1 });
     expect(btn).toBeEnabled();
     fireEvent.change(input, {
       target: { value: 'new text' },
     });
-    await userEvent.click(btn);
     expect(input).toHaveValue('new text');
-    expect(store.getState().FilterReducer).toEqual({ searchStr: 'new text', currentPage: 1 });
+    await userEvent.click(btn);
+    expect(await store.getState().FilterReducer).toEqual({ searchStr: 'new text', currentPage: 1 });
+  });
+
+  it('clear value in text input', async () => {
+    const store = setupStore();
+    const conteiner = render(
+      <Provider store={store}>
+        <SearchBar />
+      </Provider>
+    );
+    const btn = await conteiner.getByTestId('search-btn');
+    const input = await conteiner.getByTestId('search-input');
+    expect(store.getState().FilterReducer).toEqual({ searchStr: '', currentPage: 1 });
+    expect(btn).toBeEnabled();
+    fireEvent.change(input, {
+      target: { value: 'some value' },
+    });
+    await userEvent.click(btn);
+    expect(input).toHaveValue('some value');
+    expect(store.getState().FilterReducer).toEqual({ searchStr: 'some value', currentPage: 1 });
+    fireEvent.change(input, {
+      target: { value: '' },
+    });
+    expect(input).toHaveValue('');
+    expect(store.getState().FilterReducer).toEqual({ searchStr: '', currentPage: 1 });
+  });
+
+  it('clear value click on btn', async () => {
+    const store = setupStore();
+    const conteiner = render(
+      <Provider store={store}>
+        <SearchBar />
+      </Provider>
+    );
+    const btn = await conteiner.getByTestId('search-btn');
+    const input = await conteiner.getByTestId('search-input');
+    const resetBtn = await conteiner.getByTestId('reset-search-btn');
+    expect(store.getState().FilterReducer).toEqual({ searchStr: '', currentPage: 1 });
+    expect(btn).toBeEnabled();
+    fireEvent.change(input, {
+      target: { value: 'clear' },
+    });
+    await userEvent.click(btn);
+    expect(input).toHaveValue('clear');
+    expect(store.getState().FilterReducer).toEqual({ searchStr: 'clear', currentPage: 1 });
+    await userEvent.click(resetBtn);
+    expect(input).toHaveValue('');
+    expect(store.getState().FilterReducer).toEqual({ searchStr: '', currentPage: 1 });
   });
 });

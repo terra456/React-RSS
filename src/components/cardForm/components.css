@@ -584,34 +584,6 @@ select {
   outline: 1px auto -webkit-focus-ring-color;
 }
 
-@font-face {
-  font-family: Inter var;
-
-  font-style: normal;
-
-  font-weight: 100 900;
-
-  font-display: swap;
-
-  src: url("/fonts/Inter-roman.var.woff2?v=3.18") format("woff2");
-
-  font-named-instance: Regular;
-}
-
-@font-face {
-  font-family: Inter var;
-
-  font-style: italic;
-
-  font-weight: 100 900;
-
-  font-display: swap;
-
-  src: url("/fonts/Inter-italic.var.woff2?v=3.18") format("woff2");
-
-  font-named-instance: Italic;
-}
-
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;

@@ -5,7 +5,7 @@ import { IFormValues } from 'types';
 export type InputProps = {
   type: string;
   label?: string;
-  name?: string;
+  name: keyof IFormValues;
   desc?: string;
   register: UseFormRegister<IFormValues>;
   options: string[];

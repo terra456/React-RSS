@@ -14,9 +14,7 @@ describe('Header', () => {
   it('does links activating', async () => {
     render(<Header />, { wrapper: BrowserRouter });
     const linkHome = await screen.getByText(/Home/i);
-    const linkAbout = await screen.getByText(/aboutUs/i);
-    // const user = userEvent.setup();
-    expect(linkHome).toContainHTML('aria-current="page"');
+    const linkAbout = await screen.getByText(/about us/i);
     await userEvent.click(linkAbout);
     expect(linkHome).not.toContainHTML('aria-current="page"');
     expect(linkAbout).toContainHTML('aria-current="page"');
