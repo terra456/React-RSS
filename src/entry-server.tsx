@@ -8,7 +8,6 @@ import { setupStore } from './store/store';
 
 export function render(url: string) {
   const store = setupStore();
-  console.log(url);
   return renderToString(
     <Provider store={store}>
       <StaticRouter location={url}>
