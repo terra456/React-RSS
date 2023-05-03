@@ -21,6 +21,7 @@ async function createServer() {
   app.use('*', async (req, res, next) => {
     if (req.originalUrl === '/') {
       res.redirect('./home');
+      return;
     }
     const url = req.originalUrl;
 
@@ -44,7 +45,7 @@ async function createServer() {
     }
   });
 
-  app.listen(5173);
+  app.listen(5173, () => console.log('Server started http://localhost:5173'));
 }
 
 createServer();

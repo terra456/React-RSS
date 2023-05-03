@@ -1,7 +1,7 @@
 {
-  "watch": ["."],
+  "watch": ["./"],
   "ext": ".ts",
-  "ignore": ["**/test/**", "**/docs/**", ".git", "node_modules", "dist"],
+  "ignore": ["**/test/**", "**/docs/**", ".git", "node_modules", "dist", "bild"],
   "execMap": {
     "ts": "ts-node"
   },
