@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "dev": "nodemon",
     "build:client": "tsc && vite build --outDir dist/client --ssrManifest",
     "build:server": "tsc && vite build --outDir dist/server --ssr src/entry-server.js",
     "preview": "vite preview",
