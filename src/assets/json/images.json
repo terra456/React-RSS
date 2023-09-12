@@ -1,0 +1,231 @@
+[
+  {
+    "year": "1516",
+    "picture": "79",
+    "author": { "ru": "Тициан", "en": "Titian" },
+    "name": { "ru": "Динарий Кесаря", "en": "Denarius Caesar" },
+    "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi velit fugiat vero repellat natus ea, blanditiis sequi, accusantium enim saepe, aliquid facere cupiditate molestiae fugit itaque necessitatibus. Excepturi, nisi voluptas.",
+    "likes": "989",
+    "dislikes": "323",
+    "watch": "4534"
+  },
+  {
+    "year": "1832",
+    "picture": "80",
+    "author": { "ru": "Карл Брюллов", "en": "Karl Bryullov" },
+    "name": { "ru": "Всадница", "en": "Horsewoman" },
+    "desc": "Lorem ipsum. Optio eius odio, odit deleniti enim deserunt aliquam, ratione nam quidem sed omnis iusto porro temporibus vitae alias.",
+    "likes": "435",
+    "dislikes": "65",
+    "watch": "34523"
+  },
+  {
+    "year": "1817",
+    "picture": "81",
+    "author": { "ru": "Василий Верещагин", "en": "Vasily Vereshchagin" },
+    "name": { "ru": "Апофеоз войны", "en": "Apotheosis of War" },
+    "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Et harum recusandae rem animi non, aliquam error assumenda autem itaque nihil, doloremque esse reprehenderit numquam, iste commodi tempora vero voluptas quis!",
+    "likes": "576",
+    "dislikes": "324",
+    "watch": "4534"
+  },
+  {
+    "year": "1475",
+    "picture": "82",
+    "author": { "ru": "Леонардо да Винчи", "en": "Leonardo da Vinci" },
+    "name": { "ru": "Благовещение", "en": "Annunciation" },
+    "desc": "Lorem ipsum. Atque mollitia adipisci perspiciatis dignissimos voluptatum minima placeat, at cupiditate necessitatibus dolorum sapiente saepe aliquam ullam a cumque praesentium iste. Provident, libero.",
+    "likes": "856",
+    "dislikes": "234",
+    "watch": "5646"
+  },
+  {
+    "year": "1871",
+    "picture": "83",
+    "author": { "ru": "Алексей Саврасов", "en": "Alexey Savrasov" },
+    "name": { "ru": "Грачи прилетели", "en": "The Rooks Have Arrived" },
+    "desc": "Lorem ipsum. Ipsam, maiores, quasi repudiandae hic possimus id vero assumenda eligendi, dignissimos deserunt temporibus placeat doloribus! Nesciunt, harum. Dicta optio ullam repellat iure.",
+    "likes": "856",
+    "dislikes": "343",
+    "watch": "54643"
+  },
+  {
+    "year": "1516",
+    "picture": "84",
+    "author": { "ru": "Тициан", "en": "Titian" },
+    "name": {
+      "ru": "Любовь земная и Любовь небесная",
+      "en": "Earthly Love and Heavenly Love"
+    },
+    "desc": "Lorem ipsum. Optio eius odio, odit deleniti enim deserunt aliquam, ratione nam quidem sed omnis iusto porro temporibus vitae alias.",
+    "likes": "768",
+    "dislikes": "234",
+    "watch": "2324"
+  },
+  {
+    "year": "1761",
+    "picture": "85",
+    "author": { "ru": "Жан Батист Грёз", "en": "Jean Baptiste Greuze" },
+    "name": { "ru": "Деревенская помолвка", "en": "Village Engagement" },
+    "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Et harum recusandae rem animi non, aliquam error assumenda autem itaque nihil, doloremque esse reprehenderit numquam, iste commodi tempora vero voluptas quis!",
+    "likes": "867",
+    "dislikes": "342",
+    "watch": "6456"
+  },
+  {
+    "year": "1907",
+    "picture": "86",
+    "author": { "ru": "Пабло Пикассо", "en": "Pablo Picasso" },
+    "name": { "ru": "Авиньонские девицы", "en": "The girls of Avignon" },
+    "desc": "Lorem ipsum. Atque mollitia adipisci perspiciatis dignissimos voluptatum minima placeat, at cupiditate necessitatibus dolorum sapiente saepe aliquam ullam a cumque praesentium iste. Provident, libero.",
+    "likes": "978",
+    "dislikes": "345",
+    "watch": "5474"
+  },
+  {
+    "year": "1873",
+    "picture": "87",
+    "author": { "ru": "Илья Репин", "en": "Ilya Repin" },
+    "name": { "ru": "Бурлаки на Волге", "en": "Barge Haulers on the Volga" },
+    "desc": "Lorem ipsum. Optio eius odio, odit deleniti enim deserunt aliquam, ratione nam quidem sed omnis iusto porro temporibus vitae alias.",
+    "likes": "876",
+    "dislikes": "344",
+    "watch": "57645"
+  },
+  {
+    "year": "1890",
+    "picture": "88",
+    "author": { "ru": "Михаил Нестеров", "en": "Mikhail Nesterov" },
+    "name": {
+      "ru": "Видение отроку Варфоломею",
+      "en": "Vision to the youth Bartholomew"
+    },
+    "desc": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, quis? Eaque, explicabo?",
+    "likes": "456",
+    "dislikes": "765",
+    "watch": "6456"
+  },
+  {
+    "year": "1506",
+    "picture": "89",
+    "author": { "ru": "Рафаэль", "en": "Raphael" },
+    "name": { "ru": "Мадонна Бельведерская", "en": "Madonna of the Belvedere" },
+    "desc": "Lorem ipsum. Atque mollitia adipisci perspiciatis dignissimos voluptatum minima placeat, at cupiditate necessitatibus dolorum sapiente saepe aliquam ullam a cumque praesentium iste. Provident, libero.",
+    "likes": "345",
+    "dislikes": "546",
+    "watch": "5645"
+  },
+  {
+    "year": "1850",
+    "picture": "90",
+    "author": { "ru": "Василий Тропинин", "en": "Vasily Tropinin" },
+    "name": { "ru": "Девушка с горшком роз", "en": "Girl with a pot of roses" },
+    "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Et harum recusandae rem animi non, aliquam error assumenda autem itaque nihil, doloremque esse reprehenderit numquam, iste commodi tempora vero voluptas quis!",
+    "likes": "74",
+    "dislikes": "66",
+    "watch": "7658"
+  },
+  {
+    "year": "1596",
+    "picture": "91",
+    "author": { "ru": "Караваджо", "en": "Caravaggio" },
+    "name": { "ru": "Лютнист", "en": "Lute player" },
+    "desc": "Lorem ipsum. Ipsam, maiores, quasi repudiandae hic possimus id vero assumenda eligendi, dignissimos deserunt temporibus placeat doloribus! Nesciunt, harum. Dicta optio ullam repellat iure.",
+    "likes": "234",
+    "dislikes": "435",
+    "watch": "46435"
+  },
+  {
+    "year": "1871",
+    "picture": "92",
+    "author": { "ru": "Василий Перов", "en": "Vasily Perov" },
+    "name": { "ru": "Охотники на привале", "en": "Hunters at Rest" },
+    "desc": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, quis? Eaque, explicabo?",
+    "likes": "634",
+    "dislikes": "34",
+    "watch": "7456"
+  },
+  {
+    "year": "1498",
+    "picture": "93",
+    "author": { "ru": "Леонардо да Винчи", "en": "Leonardo da Vinci" },
+    "name": { "ru": "Тайная вечеря", "en": "The Last Supper" },
+    "desc": "Lorem ipsum. Atque mollitia adipisci perspiciatis dignissimos voluptatum minima placeat, at cupiditate necessitatibus dolorum sapiente saepe aliquam ullam a cumque praesentium iste. Provident, libero.",
+    "likes": "856",
+    "dislikes": "344",
+    "watch": "3423"
+  },
+  {
+    "year": "1765",
+    "picture": "94",
+    "author": { "ru": "Жан Батист Грёз", "en": "Jean Baptiste Greuze" },
+    "name": { "ru": "Избалованное дитя", "en": "Spoiled Child" },
+    "desc": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, quis? Eaque, explicabo?",
+    "likes": "234",
+    "dislikes": "456",
+    "watch": "75645"
+  },
+  {
+    "year": "1896",
+    "picture": "95",
+    "author": {
+      "ru": "Адольф Вильям Бугро",
+      "en": "Adolphe William Bouguereau"
+    },
+    "name": { "ru": "Волна", "en": "Wave" },
+    "desc": "Lorem ipsum. Optio eius odio, odit deleniti enim deserunt aliquam, ratione nam quidem sed omnis iusto porro temporibus vitae alias.",
+    "likes": "3434",
+    "dislikes": "456",
+    "watch": "56446"
+  },
+  {
+    "year": "1912",
+    "picture": "96",
+    "author": { "ru": "Кузьма Петров-Водкин", "en": "Kuzma Petrov-Vodkin" },
+    "name": { "ru": "Купание красного коня", "en": "Bathing the red horse" },
+    "desc": "Lorem ipsum. Ipsam, maiores, quasi repudiandae hic possimus id vero assumenda eligendi, dignissimos deserunt temporibus placeat doloribus! Nesciunt, harum. Dicta optio ullam repellat iure.",
+    "likes": "675",
+    "dislikes": "23",
+    "watch": "56456"
+  },
+  {
+    "year": "1908",
+    "picture": "97",
+    "author": { "ru": "Густав Климт", "en": "Gustav Klimt" },
+    "name": { "ru": "Поцелуй", "en": "Kiss" },
+    "desc": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Et harum recusandae rem animi non, aliquam error assumenda autem itaque nihil, doloremque esse reprehenderit numquam, iste commodi tempora vero voluptas quis!",
+    "likes": "645",
+    "dislikes": "34",
+    "watch": "456"
+  },
+  {
+    "year": "1878",
+    "picture": "98",
+    "author": { "ru": "Иван Шишкин", "en": "Ivan Shishkin" },
+    "name": { "ru": "Рожь", "en": "Rye" },
+    "desc": "Lorem ipsum. Ipsam, maiores, quasi repudiandae hic possimus id vero assumenda eligendi, dignissimos deserunt temporibus placeat doloribus! Nesciunt, harum. Dicta optio ullam repellat iure.",
+    "likes": "567",
+    "dislikes": "46",
+    "watch": "6443"
+  },
+  {
+    "year": "1872",
+    "picture": "99",
+    "author": { "ru": "Жан-Леон Жером", "en": "Jean-Leon Gerome" },
+    "name": { "ru": "Бой гладиаторов", "en": "Gladiator Fight" },
+    "desc": "Lorem ipsum aliquid facere cupiditate molestiae fugit itaque necessitatibus. Excepturi, nisi voluptas.",
+    "likes": "46",
+    "dislikes": "54",
+    "watch": "3535"
+  },
+  {
+    "year": "1887",
+    "picture": "100",
+    "author": { "ru": "Василий Суриков", "en": "Vasily Surikov" },
+    "name": { "ru": "Боярыня Морозова", "en": "Boyarynya Morozova" },
+    "desc": "Lorem ipsum. Eligendi velit fugiat vero repellat natus ea, blanditiis sequi, accusantium enim saepe",
+    "likes": "534",
+    "dislikes": "34",
+    "watch": "5435"
+  }
+]
