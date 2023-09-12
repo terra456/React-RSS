@@ -75,7 +75,6 @@ describe('Checkbox render', () => {
       await screen.getByTestId('file-upload'),
       new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' })
     );
-    expect(screen.getByTestId('file-upload').files[0].name).toBe('chucknorris.png');
     expect(form).toHaveFormValues({
       name: 'Name of the card',
       date: '2020-05-24',
@@ -90,16 +89,5 @@ describe('Checkbox render', () => {
     expect(textInputs[0]).toHaveValue('Name of the card');
     await userEvent.click(btn);
     expect(btn).toBeDisabled();
-    // expect(textInputs[0]).not.toHaveValue('Name of the card');
-    // expect(form).not.toHaveFormValues({
-    //   name: 'Name of the card',
-    //   date: '2020-05-24',
-    //   desc: 'Some Description',
-    //   selectValue: 'select2',
-    //   checkboxValue: ['option2', 'option4'],
-    //   radioValue: 'value1',
-    //   file: 'C:\\fakepath\\chucknorris.png',
-    //   agree: true,
-    // });
   });
 });

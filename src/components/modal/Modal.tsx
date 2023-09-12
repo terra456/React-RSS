@@ -1,7 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
-
 import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import React, { Fragment, useEffect, useState } from 'react';
 import { getEpisode } from 'rickmortyapi';
 import { rickAndMortyApi } from '../../services/fetchAPI';
 import Spinner from '../spinner/Spinner';
@@ -26,8 +25,6 @@ function Modal({ el, open, handleClose }: Props) {
         let res: string[] = [];
         if (Array.isArray(data)) {
           res = data.map((result) => `${result.id}: ${result.name}`);
-        } else {
-          res.push(`${data.id}: ${data.name}`);
         }
         setEpisodesArr(res);
       });
@@ -69,6 +66,7 @@ function Modal({ el, open, handleClose }: Props) {
               <Dialog.Panel className="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                 <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                   <button
+                    data-testid="close-btn"
                     type="button"
                     className="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
                     onClick={() => handleClose()}
@@ -77,7 +75,10 @@ function Modal({ el, open, handleClose }: Props) {
                     <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
 
-                  <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+                  <div
+                    data-testid="modal-div"
+                    className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8"
+                  >
                     <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
                       <img
                         src={data.image}
