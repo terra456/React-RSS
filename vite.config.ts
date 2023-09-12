@@ -20,5 +20,5 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './setupTest.ts',
   },
-  base: '/',
+  base: '/React-RSS/',
 });
